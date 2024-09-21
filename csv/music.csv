@@ -1,18 +1,18 @@
-id,title,artist,album,albumartist,track,disc,genre,year,country,version,label,catalog_number,media_source
-2,I Saw Her Standing There,The Beatles,Please Please Me,The Beatles,01,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-3,Misery,The Beatles,Please Please Me,The Beatles,02,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-4,Anna (Go to Him),The Beatles,Please Please Me,The Beatles,03,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-5,Chains,The Beatles,Please Please Me,The Beatles,04,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-6,Boys,The Beatles,Please Please Me,The Beatles,05,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-7,Ask Me Why,The Beatles,Please Please Me,The Beatles,06,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-8,Please Please Me,The Beatles,Please Please Me,The Beatles,07,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-9,Love Me Do,The Beatles,Please Please Me,The Beatles,08,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-10,P.S. I Love You,The Beatles,Please Please Me,The Beatles,09,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-11,Baby It's You,The Beatles,Please Please Me,The Beatles,10,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-12,Do You Want to Know a Secret,The Beatles,Please Please Me,The Beatles,11,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-13,A Taste of Honey,The Beatles,Please Please Me,The Beatles,12,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-14,There's a Place,The Beatles,Please Please Me,The Beatles,13,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
-15,Twist and Shout,The Beatles,Please Please Me,The Beatles,14,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD
+id,title,artist,album,albumartist,track,disc,genre,year,country,version,label,catalog_number,media_source,attributes
+2,I Saw Her Standing There,The Beatles,Please Please Me,The Beatles,01,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+3,Misery,The Beatles,Please Please Me,The Beatles,02,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+4,Anna (Go to Him),The Beatles,Please Please Me,The Beatles,03,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+5,Chains,The Beatles,Please Please Me,The Beatles,04,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+6,Boys,The Beatles,Please Please Me,The Beatles,05,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+7,Ask Me Why,The Beatles,Please Please Me,The Beatles,06,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+8,Please Please Me,The Beatles,Please Please Me,The Beatles,07,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+9,Love Me Do,The Beatles,Please Please Me,The Beatles,08,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+10,P.S. I Love You,The Beatles,Please Please Me,The Beatles,09,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+11,Baby It's You,The Beatles,Please Please Me,The Beatles,10,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+12,Do You Want to Know a Secret,The Beatles,Please Please Me,The Beatles,11,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+13,A Taste of Honey,The Beatles,Please Please Me,The Beatles,12,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+14,There's a Place,The Beatles,Please Please Me,The Beatles,13,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+15,Twist and Shout,The Beatles,Please Please Me,The Beatles,14,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
 16,Wanna Be Startin' Somethin',Michael Jackson,Thriller,Michael Jackson,01,01,Pop,1982,US,Stereo,Epic,QE 38112,CD
 17,Baby Be Mine,Michael Jackson,Thriller,Michael Jackson,02,01,Pop,1982,US,Stereo,Epic,QE 38112,CD
 18,The Girl Is Mine,Michael Jackson,Thriller,Michael Jackson,03,01,Pop,1982,US,Stereo,Epic,QE 38112,CD
