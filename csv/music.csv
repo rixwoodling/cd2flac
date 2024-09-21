@@ -1,24 +1,24 @@
-id,title,artist,album,albumartist,track,disc,genre,year,country,version,label,catalog_number,media_source,attributes
-2,I Saw Her Standing There,The Beatles,Please Please Me,The Beatles,01,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-3,Misery,The Beatles,Please Please Me,The Beatles,02,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-4,Anna (Go to Him),The Beatles,Please Please Me,The Beatles,03,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-5,Chains,The Beatles,Please Please Me,The Beatles,04,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-6,Boys,The Beatles,Please Please Me,The Beatles,05,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-7,Ask Me Why,The Beatles,Please Please Me,The Beatles,06,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-8,Please Please Me,The Beatles,Please Please Me,The Beatles,07,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-9,Love Me Do,The Beatles,Please Please Me,The Beatles,08,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-10,P.S. I Love You,The Beatles,Please Please Me,The Beatles,09,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-11,Baby It's You,The Beatles,Please Please Me,The Beatles,10,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-12,Do You Want to Know a Secret,The Beatles,Please Please Me,The Beatles,11,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-13,A Taste of Honey,The Beatles,Please Please Me,The Beatles,12,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-14,There's a Place,The Beatles,Please Please Me,The Beatles,13,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-15,Twist and Shout,The Beatles,Please Please Me,The Beatles,14,01,Rock,1963,UK,Stereo,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
-16,Wanna Be Startin' Somethin',Michael Jackson,Thriller,Michael Jackson,01,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-17,Baby Be Mine,Michael Jackson,Thriller,Michael Jackson,02,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-18,The Girl Is Mine,Michael Jackson,Thriller,Michael Jackson,03,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-19,Thriller,Michael Jackson,Thriller,Michael Jackson,04,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-20,Beat It,Michael Jackson,Thriller,Michael Jackson,05,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-21,Billie Jean,Michael Jackson,Thriller,Michael Jackson,06,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-22,Human Nature,Michael Jackson,Thriller,Michael Jackson,07,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-23,P.Y.T. (Pretty Young Thing),Michael Jackson,Thriller,Michael Jackson,08,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
-24,The Lady in My Life,Michael Jackson,Thriller,Michael Jackson,09,01,Pop,1982,US,Stereo,Epic,QE 38112,CD,
+id,genre,albumartist,artist,album,year,disc,track,title,label,catalog_number,media_source,attributes
+2,Rock,The Beatles,The Beatles,Please Please Me,1963,01,01,I Saw Her Standing There,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+3,Rock,The Beatles,The Beatles,Please Please Me,1963,01,02,Misery,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+4,Rock,The Beatles,The Beatles,Please Please Me,1963,01,03,Anna (Go to Him),Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+5,Rock,The Beatles,The Beatles,Please Please Me,1963,01,04,Chains,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+6,Rock,The Beatles,The Beatles,Please Please Me,1963,01,05,Boys,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+7,Rock,The Beatles,The Beatles,Please Please Me,1963,01,06,Ask Me Why,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+8,Rock,The Beatles,The Beatles,Please Please Me,1963,01,07,Please Please Me,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+9,Rock,The Beatles,The Beatles,Please Please Me,1963,01,08,Love Me Do,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+10,Rock,The Beatles,The Beatles,Please Please Me,1963,01,09,P.S. I Love You,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+11,Rock,The Beatles,The Beatles,Please Please Me,1963,01,10,Baby It's You,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+12,Rock,The Beatles,The Beatles,Please Please Me,1963,01,11,Do You Want to Know a Secret,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+13,Rock,The Beatles,The Beatles,Please Please Me,1963,01,12,A Taste of Honey,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+14,Rock,The Beatles,The Beatles,Please Please Me,1963,01,13,There's a Place,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+15,Rock,The Beatles,The Beatles,Please Please Me,1963,01,14,Twist and Shout,Parlophone,CDP 7 46435 2,CD,2009 Stereo Remaster
+16,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,01,Wanna Be Startin' Somethin',Epic,QE 38112,CD,
+17,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,02,Baby Be Mine,Epic,QE 38112,CD,
+18,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,03,The Girl Is Mine,Epic,QE 38112,CD,
+19,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,04,Thriller,Epic,QE 38112,CD,
+20,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,05,Beat It,Epic,QE 38112,CD,
+21,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,06,Billie Jean,Epic,QE 38112,CD,
+22,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,07,Human Nature,Epic,QE 38112,CD,
+23,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,08,P.Y.T. (Pretty Young Thing),Epic,QE 38112,CD,
+24,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,09,The Lady in My Life,Epic,QE 38112,CD,
