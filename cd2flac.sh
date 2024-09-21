@@ -8,15 +8,8 @@ if [ -z "$1" ]; then
 fi
 
 # Check for cdparanoia and flac
-if ! command -v cdparanoia &> /dev/null; then
-  echo "cdparanoia is not installed."
-  exit 1
-fi
-
-if ! command -v flac &> /dev/null; then
-  echo "flac is not installed."
-  exit 1
-fi
+if ! command -v cdparanoia &> /dev/null; then echo "cdparanoia is not installed."; exit 1; fi
+if ! command -v flac &> /dev/null; then echo "flac is not installed."; exit 1; fi
 
 # Rip CD to AIFF and convert to FLAC
 cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
