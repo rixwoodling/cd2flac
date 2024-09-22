@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# 
 # Check if argument is provided, if not, show help message
 if [ -z "$1" ]; then
   echo "Usage: sh cd2flac.sh <CD_IDENTIFIER>"
@@ -20,6 +21,7 @@ argument=$( grep -i "$1" csv/music.csv )
 if [ -z "$argument" ]; then 
 echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
 
+# 
 if [ ! -z "$argument" ]; then
 matches=$( cat csv/music.csv | tail -n +2 | grep "$argument" | sed 's/, /__/g' | \
 awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | \
@@ -43,7 +45,39 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
     echo "you selected:"
     echo "$selected_line"; fi
 
-fi    
+fi
+
+# 
+album_artist=$( echo "$selected_line" | awk -F' - ' '{print $1}' )
+album_year_attr=$( echo "$selected_line" | awk -F' - ' '{print $2}' )
+
+if [ -d "flac/$album_artist/$album_year_attr" ]; then
+  if [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
+    echo "target already exists"; exit 1; fi
+    # this section might be gone if script handles if
+    # files already exist, it renames each file and adds metadata, or
+    # files don't exist and proceeds to rip, rename and add metadata.
+
+else
+  # create flac directory if not created
+  if [ ! -d "flac" ]; then mkdir "flac"; fi
+
+  # create album artist directory if not created
+  if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
+
+  # create album artist directory if not created
+  if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
+fi
+
+#
+cd "flac/$album_artist/$album_year_attr"
+
+# rip cd to aiff and convert to flac
+cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+
+
 # If multiple matches are found, display the list and ask the user to select
 #if [ "$( echo $ | wc -l ) -gt 1 ]; then
 #  echo "Multiple matches found for '$1':"
