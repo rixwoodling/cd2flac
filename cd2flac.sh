@@ -22,6 +22,7 @@ if [ -z $( grep -i "$1" csv/music.csv ) ]; then
 elif [ $( echo $( grep -i "$1" csv/music.csv ) | wc -l ) -gt 1 ]; then
   echo "Multiple matches found for '$1':"
   matches=$( cat csv/music.csv | grep "$1" | sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq )
+  echo "$matches" | nl
   echo "Please select the number corresponding to the correct album:"
   read -r selection
 
