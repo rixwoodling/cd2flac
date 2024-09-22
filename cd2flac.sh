@@ -51,33 +51,35 @@ fi
 album_artist=$( echo "$selected_line" | awk -F' - ' '{print $1}' )
 album_year_attr=$( echo "$selected_line" | awk -F' - ' '{print $2}' )
 
-if [ -d "flac/$album_artist/$album_year_attr" ]; then
-  if [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
-    echo "target already exists"; exit 1; fi
-    # this section might be gone if script handles if
-    # files already exist, it renames each file and adds metadata, or
-    # files don't exist and proceeds to rip, rename and add metadata.
-
-else
-  # create flac directory if not created
-  if [ ! -d "flac" ]; then mkdir "flac"; fi
-
-  # create album artist directory if not created
-  if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
-
-  # create album artist directory if not created
-  if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
-fi
-
 #
-cd "flac/$album_artist/$album_year_attr"
+# create flac directory if not created
+if [ ! -d "flac" ]; then mkdir "flac"; fi
 
-# rip cd to aiff and convert to flac
-cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+# create album artist directory if not created
+if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
 
+# create album artist directory if not created
+if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
 
+# if directory is empty, proceed to convert into directory
+if [ -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
+  #
+  cd "flac/$album_artist/$album_year_attr"
+
+  # rip cd to aiff and convert to flac
+  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+
+# 
+elif [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
+  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
+  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev )
+  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
+  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//')
+  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+fi
+  
 # If multiple matches are found, display the list and ask the user to select
 #if [ "$( echo $ | wc -l ) -gt 1 ]; then
 #  echo "Multiple matches found for '$1':"
