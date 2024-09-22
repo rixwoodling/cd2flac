@@ -21,7 +21,7 @@ if [ -z "$argument" ]; then
 echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
 
 if [ ! -z "$argument" ]; then
-matches=$( cat csv/music.csv | grep "$argument" | sed 's/, /__/g' | \
+matches=$( cat csv/music.csv | grep "$argument" | tail -n +2 | sed 's/, /__/g' | \
 awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | \
 sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
