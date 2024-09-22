@@ -22,8 +22,18 @@ echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
 
 if [ ! -z "$argument" ]; then
 matches=$( cat csv/music.csv | grep "$argument" | sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq )
-echo "$matches" | nl ; exit 0; fi
+echo "$matches" | nl
+read -r selection
 
+  selected_line=$( echo "$matches" | sed -n "${selection}p" )
+  if [ -z "$selected_line" ]; then
+    echo "invalid selection. exiting."; exit 1; fi
+
+  if [ ! -z "$selected_line" ]; then
+    echo "you selected:"
+    echo "$selected_line"; fi
+
+fi    
 # If multiple matches are found, display the list and ask the user to select
 #if [ "$( echo $ | wc -l ) -gt 1 ]; then
 #  echo "Multiple matches found for '$1':"
