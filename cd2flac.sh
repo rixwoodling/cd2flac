@@ -21,15 +21,20 @@ if [ -z "$argument" ]; then
 echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
 
 if [ ! -z "$argument" ]; then
-matches=$( cat csv/music.csv | grep "$argument" | sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq )
-echo "$matches" | nl
-read -r selection
+matches=$( cat csv/music.csv | grep "$argument" | sed 's/, /__/g' | \
+awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | \
+sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
-  selected_line=$( echo "$matches" | sed -n "${selection}p" )
-  if [ -z "$selected_line" ]; then
+  if [ -z "$matches" ]; then
     echo "invalid selection. exiting."; exit 1; fi
 
-  if [ ! -z "$selected_line" ]; then
+  if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
+    echo "$matches"; exit 0; fi
+
+  if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
+    echo "$matches" | nl
+    read -r selection
+    selected_line=$( echo "$matches" | sed -n "${selection}p" )
     echo "you selected:"
     echo "$selected_line"; fi
 
