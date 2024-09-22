@@ -33,8 +33,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
-    echo "$matches" | nl | wc -l
-    read -r selection
+    echo -n "select 1-$( echo "$matches" | nl | wc -l ); read -r selection
     
     # Minimal input validation check
     if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $( echo "$matches" | wc -l ) ]; then
