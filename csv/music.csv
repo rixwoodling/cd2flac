@@ -22,18 +22,17 @@ id,genre,albumartist,artist,album,year,disc,track,title,label,catalog_number,med
 22,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,07,Human Nature,Epic,QE 38112,CD,
 23,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,08,P.Y.T. (Pretty Young Thing),Epic,QE 38112,CD,
 24,Pop,Michael Jackson,Michael Jackson,Thriller,1982,01,09,The Lady in My Life,Epic,QE 38112,CD,
-id,genre,albumartist,artist,album,year,disc,track,title,label,catalog_number,media_source,attributes
-25,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,1,2 + 2 = 5,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-26,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,2,Sit Down. Stand Up,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-27,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,3,Sail to the Moon,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-28,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,4,Backdrifts,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-29,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,5,Go to Sleep,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-30,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,6,Where I End and You Begin,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-31,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,7,We Suck Young Blood,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-32,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,8,The Gloaming,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-33,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,9,There There,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-34,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,10,I Will,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-35,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,11,A Punchup at a Wedding,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-36,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,12,Myxomatosis,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-37,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,13,Scatterbrain,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
-38,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,1,14,A Wolf at the Door,"Parlophone, Ltd.",7243 5 84545 2 8,CD,Standard Edition
+25,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,01,2 + 2 = 5,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+26,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,02,Sit Down. Stand Up,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+27,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,03,Sail to the Moon,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+28,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,04,Backdrifts,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+29,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,05,Go to Sleep,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+30,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,06,Where I End and You Begin,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+31,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,07,We Suck Young Blood,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+32,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,08,The Gloaming,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+33,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,09,There There,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+34,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,10,I Will,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+35,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,11,A Punchup at a Wedding,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+36,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,12,Myxomatosis,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+37,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,13,Scatterbrain,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
+38,Alternative,Radiohead,Radiohead,Hail to the Thief,2003,01,14,A Wolf at the Door,"Parlophone, Ltd.",7243 5 84545 2 8,CD,
