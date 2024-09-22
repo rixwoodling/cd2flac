@@ -34,6 +34,11 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
     read -r selection
+    
+    # Minimal input validation check
+    if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $( echo "$matches" | wc -l ) ]; then
+    echo "Invalid selection. Exiting."; exit 1; fi
+    
     selected_line=$( echo "$matches" | sed -n "${selection}p" )
     echo "you selected:"
     echo "$selected_line"; fi
