@@ -51,8 +51,8 @@ fi
 album_artist=$( echo "$selected_line" | awk -F' - ' '{print $1}' )
 album_year_attr=$( echo "$selected_line" | awk -F' - ' '{print $2}' )
 
-echo $album_artist
-echo $album_year_attr
+echo "$album_artist"
+echo "$album_year_attr"
 #
 # create flac directory if not created
 if [ ! -d "flac" ]; then mkdir "flac"; fi
