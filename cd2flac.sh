@@ -48,13 +48,12 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
 fi
 
-echo "$selected_line"
 # 
-#album_artist="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
-#album_year_attr="$( echo "$selected_line" | awk -F' - ' '{print $2}' )"
+album_artist="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
+album_year_attr="$( echo "$selected_line" | awk -F' - ' '{print $2}' )"
 
-#echo "$album_artist"
-#echo "$album_year_attr"
+echo "$album_artist"
+echo "$album_year_attr"
 #
 # create flac directory if not created
 #if [ ! -d "flac" ]; then mkdir "flac"; fi
