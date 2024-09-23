@@ -32,7 +32,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
   if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
     selected_line="$matches"
-    echo "$matches"; exit 0; fi
+    echo "$selected_line"; exit 0; fi
 
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
@@ -48,6 +48,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
 fi
 
+echo "$selected_line"
 # 
 #album_artist="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
 #album_year_attr="$( echo "$selected_line" | awk -F' - ' '{print $2}' )"
