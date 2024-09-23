@@ -62,26 +62,29 @@ if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
 # create album artist directory if not created
 if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
 
+
+# get values from selected_line and parse csv for track total  
+ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
+ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//')
+YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
+ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//')
+TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+echo "$TRACK_TOTAL"
+
 # if directory is empty, proceed to convert into directory
 FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
 echo "$FLAC_TOTAL"
 
+if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
   # change to nested directory
-  #ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+  cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
   # rip cd to aiff and convert to flac
-  #cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-  #cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-  #flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
 
-
-# get values from selected_line and parse csv for track total  
-#ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
-#ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//')
-#YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
-#ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//')
-#TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
-#echo "$TRACK_TOTAL"
+fi
 
 #echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
 #if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
