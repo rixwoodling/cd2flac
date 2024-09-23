@@ -74,15 +74,15 @@ if [ ! -d flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR" ]; then mkdir flac/"$ALBUM_ART
 #fi
 
 # if target directory not empty, get values from selected_line and parse csv for track totat  
-if [ ! -z $(ls -A flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR") ]; then 
-  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' ); echo "$ARTIST"
-  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
-  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
-  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//'); echo "$ATTRIBUTES"
-  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
-fi
+if [ ! -z $(ls -A "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR") ]; then echo "not empty"; fi
+#  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' ); echo "$ARTIST"
+#  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
+#  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
+#  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//'); echo "$ATTRIBUTES"
+#  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+#fi
 
-echo "$TRACK_TOTAL"
+#echo "$TRACK_TOTAL"
  
 # If multiple matches are found, display the list and ask the user to select
 # if [ "$( echo $ | wc -l ) -gt 1 ]; then
