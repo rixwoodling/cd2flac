@@ -57,10 +57,10 @@ ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[
 if [ ! -d "flac" ]; then mkdir "flac"; fi
 
 # create album artist directory if not created
-if [ ! -d flac/"$ALBUM_ARTIST" ]; then mkdir flac/"$ALBUM_ARTIST"; fi
+if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
 
 # create album artist directory if not created
-if [ ! -d flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR" ]; then mkdir flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR"; fi
+if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
 
 # if directory is empty, proceed to convert into directory
 #if [ -z $(ls -A "flac/$album_artist/$album_year_attr") ]; then 
