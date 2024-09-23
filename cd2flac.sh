@@ -63,7 +63,7 @@ if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
 if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
 
 # if directory is empty, proceed to convert into directory
-if [ -z $(ls -A "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR") ]; then
+if [ -z "$(ls -A flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR)" ]; then
 
   # change to nested directory
   cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
