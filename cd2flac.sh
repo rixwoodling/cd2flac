@@ -73,17 +73,18 @@ if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIS
 #  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
 #  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
 #  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-
-# 
-#elif [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
-#  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
-#  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev )
-#  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
-#  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//')
-#  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 #fi
 
+# if target directory not empty, get values from selected_line and parse csv for track totat  
+if [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
+  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
+  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev )
+  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
+  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//')
+  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+fi
 
+echo "$TRACK_TOTAL"
  
 # If multiple matches are found, display the list and ask the user to select
 #if [ "$( echo $ | wc -l ) -gt 1 ]; then
