@@ -65,7 +65,7 @@ if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
 if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
 
 # if directory is empty, proceed to convert into directory
-if [ -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
+if [ -z $(ls -A "flac/$album_artist/$album_year_attr") ]; then 
   #
   cd "flac/$album_artist/$album_year_attr"
 
