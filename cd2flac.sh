@@ -66,7 +66,8 @@ if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIS
 if [ -z "$(ls -A flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR)" ]; then
 
   # change to nested directory
-  ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+  #ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+  echo "hi"
 
   # rip cd to aiff and convert to flac
   #cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
