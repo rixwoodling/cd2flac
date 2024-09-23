@@ -57,10 +57,10 @@ ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[
 if [ ! -d "flac" ]; then mkdir "flac"; fi
 
 # create album artist directory if not created
-if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
+if [ ! -d flac/"$ALBUM_ARTIST" ]; then mkdir flac/"$ALBUM_ARTIST"; fi
 
 # create album artist directory if not created
-if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
+if [ ! -d flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR" ]; then mkdir flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR"; fi
 
 # if directory is empty, proceed to convert into directory
 #if [ -z $(ls -A "flac/$album_artist/$album_year_attr") ]; then 
@@ -74,7 +74,7 @@ if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIS
 #fi
 
 # if target directory not empty, get values from selected_line and parse csv for track totat  
-if [ ! -z "$(ls -A flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR)" ]; then 
+if [ ! -z "$(ls -A flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR") ]; then 
   ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' ); echo "$ARTIST"
   ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
   YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
