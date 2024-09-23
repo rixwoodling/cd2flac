@@ -73,7 +73,7 @@ echo "$FLAC_TOTAL"
   #cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
   #cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
   #flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-fi
+
 
 # get values from selected_line and parse csv for track total  
 #ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
