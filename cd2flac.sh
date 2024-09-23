@@ -82,12 +82,12 @@ ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//'
 TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 echo "$TRACK_TOTAL"
 
-echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
-if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
-echo "track total matches csv"
-else
-echo "track toatl does not match csv"
-fi
+#echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
+#if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
+#echo "track total matches csv"
+#else
+#echo "track toatl does not match csv"
+#fi
 # If multiple matches are found, display the list and ask the user to select
 # if [ "$( echo $ | wc -l ) -gt 1 ]; then
 #  echo "Multiple matches found for '$1':"
