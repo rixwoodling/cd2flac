@@ -63,11 +63,11 @@ if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
 if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
 
 # if directory is empty, proceed to convert into directory
-if [ -z "$(ls -A flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR)" ]; then
+FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
+echo "$FLAC_TOTAL"
 
   # change to nested directory
   #ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
-  echo "hi"
 
   # rip cd to aiff and convert to flac
   #cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
