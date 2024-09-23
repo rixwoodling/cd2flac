@@ -74,7 +74,7 @@ if [ ! -d flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR" ]; then mkdir flac/"$ALBUM_ART
 #fi
 
 # if target directory not empty, get values from selected_line and parse csv for track totat  
-if [ ! -z "$(ls -A flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR") ]; then 
+if [ ! -z $(ls -A flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR") ]; then 
   ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' ); echo "$ARTIST"
   ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
   YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
@@ -85,7 +85,7 @@ fi
 echo "$TRACK_TOTAL"
  
 # If multiple matches are found, display the list and ask the user to select
-#if [ "$( echo $ | wc -l ) -gt 1 ]; then
+# if [ "$( echo $ | wc -l ) -gt 1 ]; then
 #  echo "Multiple matches found for '$1':"
 #  matches=$( cat csv/music.csv | grep "$1" | sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq )
 #  echo "$matches" | nl
