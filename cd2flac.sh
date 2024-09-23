@@ -56,10 +56,10 @@ echo "$album_artist"
 echo "$album_year_attr"
 #
 # create flac directory if not created
-#if [ ! -d "flac" ]; then mkdir "flac"; fi
+if [ ! -d "flac" ]; then mkdir "flac"; fi
 
 # create album artist directory if not created
-#if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
+if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
 
 # create album artist directory if not created
 #if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
