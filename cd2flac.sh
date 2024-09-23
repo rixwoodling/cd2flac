@@ -63,15 +63,15 @@ if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
 if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
 
 # if directory is empty, proceed to convert into directory
-if [ -z $(ls -A flac/"$ALBUM_ARTIST"/"$ALBUM_YEAR_ATTR") ]; then
+if [ -z "$(ls -A flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR)" ]; then
 
   # change to nested directory
-  cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+  echo "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
   # rip cd to aiff and convert to flac
-  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+  #cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+  #cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+  #flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
 fi
 
 # get values from selected_line and parse csv for track total  
