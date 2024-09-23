@@ -76,6 +76,9 @@ FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
 echo "$FLAC_TOTAL"
 
 if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
+  
+  CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
+  
   # change to nested directory
   cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
