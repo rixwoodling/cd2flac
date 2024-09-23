@@ -50,7 +50,7 @@ fi
 
 # 
 ALBUM_ARTIST="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
-ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' )"
+ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//' )"
 
 echo "$ALBUM_ARTIST"
 echo "$ALBUM_YEAR_ATTR"
