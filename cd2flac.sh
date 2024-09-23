@@ -82,6 +82,7 @@ ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//'
 TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 echo "$TRACK_TOTAL"
 
+echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
 if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l ) ]; then 
 echo "track total matches csv"
 else
