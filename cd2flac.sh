@@ -32,7 +32,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
   if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
     selected_line="$matches"
-    echo "$matches"; fi
+    echo "$matches"; exit 0; fi
 
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
@@ -49,40 +49,42 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 fi
 
 # 
-album_artist="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
-album_year_attr="$( echo "$selected_line" | awk -F' - ' '{print $2}' )"
+#album_artist="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
+#album_year_attr="$( echo "$selected_line" | awk -F' - ' '{print $2}' )"
 
-echo "$album_artist"
-echo "$album_year_attr"
+#echo "$album_artist"
+#echo "$album_year_attr"
 #
 # create flac directory if not created
-if [ ! -d "flac" ]; then mkdir "flac"; fi
+#if [ ! -d "flac" ]; then mkdir "flac"; fi
 
 # create album artist directory if not created
-if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
+#if [ ! -d "flac/$album_artist" ]; then mkdir "flac/$album_artist"; fi
 
 # create album artist directory if not created
-if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
+#if [ ! -d "flac/$album_artist/$album_year_attr" ]; then mkdir "flac/$album_artist/$album_year_attr"; fi
 
 # if directory is empty, proceed to convert into directory
-if [ -z $(ls -A "flac/$album_artist/$album_year_attr") ]; then 
-  #
-  cd "flac/$album_artist/$album_year_attr"
+#if [ -z $(ls -A "flac/$album_artist/$album_year_attr") ]; then 
+#  #
+#  cd "flac/$album_artist/$album_year_attr"
 
-  # rip cd to aiff and convert to flac
-  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+#  # rip cd to aiff and convert to flac
+#  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+#  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+#  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
 
 # 
-elif [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
-  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
-  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev )
-  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
-  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//')
-  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
-fi
-  
+#elif [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
+#  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
+#  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev )
+#  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
+#  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//')
+#  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+#fi
+
+
+ 
 # If multiple matches are found, display the list and ask the user to select
 #if [ "$( echo $ | wc -l ) -gt 1 ]; then
 #  echo "Multiple matches found for '$1':"
