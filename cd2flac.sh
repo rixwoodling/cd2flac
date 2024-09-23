@@ -52,8 +52,6 @@ fi
 ALBUM_ARTIST="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
 ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//' )"
 
-echo "$ALBUM_ARTIST"
-echo "$ALBUM_YEAR_ATTR"
 #
 # create flac directory if not created
 if [ ! -d "flac" ]; then mkdir "flac"; fi
@@ -77,10 +75,10 @@ if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIS
 
 # if target directory not empty, get values from selected_line and parse csv for track totat  
 if [ ! -z "$(ls -A flac/$album_artist/$album_year_attr)" ]; then 
-  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
-  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev )
-  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
-  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//')
+  ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' ); echo "$ARTIST"
+  ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
+  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
+  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//'); echo "$ATTRIBUTES"
   TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 fi
 
