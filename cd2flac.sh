@@ -80,10 +80,10 @@ else echo "empty"; fi
   ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
   YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
   ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//'); echo "$ATTRIBUTES"
-#  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 #fi
 
-#echo "$TRACK_TOTAL"
+echo "$TRACK_TOTAL"
  
 # If multiple matches are found, display the list and ask the user to select
 # if [ "$( echo $ | wc -l ) -gt 1 ]; then
