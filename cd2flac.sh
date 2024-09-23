@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 
+# ERROR CHECKS
 # Check if argument is provided, if not, show help message
 if [ -z "$1" ]; then
   echo "Usage: sh cd2flac.sh <CD_IDENTIFIER>"
@@ -21,7 +21,7 @@ argument=$( grep -i "$1" csv/music.csv )
 if [ -z "$argument" ]; then 
 echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
 
-# 
+# SELECT ALBUM
 if [ ! -z "$argument" ]; then
 matches=$( cat csv/music.csv | tail -n +2 | grep "$argument" | \
 sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | \
@@ -48,11 +48,10 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
 fi
 
-# 
+# PARSE CSV FOR VALUES
 ALBUM_ARTIST="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
 ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//' )"
 
-#
 # create flac directory if not created
 if [ ! -d "flac" ]; then mkdir "flac"; fi
 
@@ -62,31 +61,31 @@ if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
 # create album artist directory if not created
 if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
 
-
 # get values from selected_line and parse csv for track total  
 ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
 ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//')
 YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
 ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//')
-TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
-echo "$TRACK_TOTAL"
 
-# if directory is empty, proceed to convert into directory
-FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
-echo "$FLAC_TOTAL"
-
+# RIP CD IF REQUIRED
+# get total number of tracks for selection in csv
+TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l ); echo "$TRACK_TOTAL"
+# get number of flac files in directory
+FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l ); echo "$FLAC_TOTAL"
+# if flac files and track totals in csv are not equal
 if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
-  
+  # get total number of tracks on CD
   CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
-  
+  if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
+    echo "track mismatch"; exit 1
   # change to nested directory
-  cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
-
-  # rip cd to aiff and convert to flac
-  cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-  cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-  flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-
+  else
+    cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+    # rip cd to aiff and convert to flac
+    cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+    cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+    flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+  fi
 fi
 
 #echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
