@@ -78,7 +78,7 @@ if [ ! -z $(ls -A "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR") ]; then echo "not empty
 else echo "empty"; fi
   ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' ); echo "$ARTIST"
   ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev ); echo "$ALBUM"
-#  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
+  YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' ); echo "$YEAR"
 #  ATTRIBUTES=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/\[.*//' | rev | sed 's/\]//'); echo "$ATTRIBUTES"
 #  TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 #fi
