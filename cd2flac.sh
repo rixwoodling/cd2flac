@@ -31,7 +31,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
     echo "invalid selection. exiting."; exit 1; fi
 
   if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
-    echo "$matches"; exit 0; fi
+    echo "$matches"; fi
 
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
