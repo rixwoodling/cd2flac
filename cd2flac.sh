@@ -113,7 +113,8 @@ fi
 #
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 echo "Renaming files..."
-for file in "$PATH_FLAC"/*.flac; do
+cd "$PATH_FLAC/"
+for file in *.flac; do
   echo "$file"
   # You can perform renaming or other operations here
 done
