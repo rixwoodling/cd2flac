@@ -40,6 +40,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
       echo "cancelled"; exit 1
     else
       echo "invalid selection. select y or n"; exit 1
+    fi  
 
   elif [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
