@@ -25,7 +25,7 @@ echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
 if [ ! -z "$argument" ]; then
 matches=$( cat csv/music.csv | tail -n +2 | grep "$argument" | \
 sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | \
-sed 's/__/, /g' | sed 's/\"//g' | uniq )
+sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
 
   if [ -z "$matches" ]; then
     echo "invalid selection. exiting."; exit 1; fi
