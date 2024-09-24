@@ -32,7 +32,16 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
 
   if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
     selected_line="$matches"
-    echo "$selected_line"; fi
+    echo "$selected_line" | nl; fi
+    echo -n "confirm [y/n]? "; read -r confirm
+    if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+      echo "proceeding..."
+    elif [ "$confirm" = "n" ] || [ "$confirm" = "N" ]; then
+      echo "cancelled"; exit 1
+    else
+      echo "invalid selection. select y or n"; exit 1
+    fi
+
 
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
@@ -40,7 +49,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
     
     # Minimal input validation check
     if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $( echo "$matches" | wc -l ) ]; then
-    echo "Invalid selection. Exiting."; exit 1; fi
+    echo "invalid selection. Exiting."; exit 1; fi
     
     selected_line=$( echo "$matches" | sed -n "${selection}p" )
     echo "you selected:"
