@@ -35,7 +35,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
     echo "$selected_line" | nl; fi
     echo -n "confirm [y/n]? "; read -r confirm
     if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
-      echo "proceeding..."
+      echo "ok"
     elif [ "$confirm" = "n" ] || [ "$confirm" = "N" ]; then
       echo "cancelled"; exit 1
     else
@@ -83,12 +83,14 @@ TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEA
 FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l ); echo "$FLAC_TOTAL"
 # if flac files and track totals in csv are not equal
 if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
+  echo "checking for CD..."
   # get total number of tracks on CD
   CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
   if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
     echo "track mismatch"; exit 1
   # change to nested directory
   else
+    echo "start ripping..."
     cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
     # rip cd to aiff and convert to flac
     cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
@@ -96,6 +98,7 @@ if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
     flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
   fi
 fi
+
 
 #echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
 #if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
