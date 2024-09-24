@@ -32,7 +32,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq )
 
   if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
     selected_line="$matches"
-    echo "$selected_line"; exit 0; fi
+    echo "$selected_line"; fi
 
   if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
