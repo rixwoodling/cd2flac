@@ -40,10 +40,8 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
       echo "cancelled"; exit 1
     else
       echo "invalid selection. select y or n"; exit 1
-    fi
 
-
-  if [ $( echo "$matches" | wc -l ) -gt 1 ]; then
+  elif [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
     echo -n "select 1-$( echo "$matches" | nl | wc -l ): "; read -r selection
     
@@ -53,7 +51,8 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
     
     selected_line=$( echo "$matches" | sed -n "${selection}p" )
     echo "you selected:"
-    echo "$selected_line"; fi
+    echo "$selected_line"; 
+  fi
 
 fi
 
