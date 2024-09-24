@@ -78,12 +78,11 @@ ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//'
 
 # RIP CD IF REQUIRED
 # get total number of tracks for selection in csv
-TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l ); echo "$TRACK_TOTAL"
+TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 # get number of flac files in directory
-FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l ); echo "$FLAC_TOTAL"
+FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
 # if flac files and track totals in csv are not equal
 if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
-  echo "checking for CD..."
   # get total number of tracks on CD
   CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
   if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
