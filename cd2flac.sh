@@ -110,11 +110,14 @@ if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
   fi
 fi
 
+#
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 echo "Renaming files..."
-for i in $(seq 1 "$TRACK_TOTAL"); do
-  echo "$PATH_FLAC/track$i"*.flac
+for file in "$PATH_FLAC"/*.flac; do
+  echo "$file"
+  # You can perform renaming or other operations here
 done
+
 
   
 #echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
