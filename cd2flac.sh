@@ -35,7 +35,7 @@ sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
     echo "$selected_line" | nl; fi
     echo -n "confirm [y/n]? "; read -r confirm
     if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
-      echo "ok"
+      :
     elif [ "$confirm" = "n" ] || [ "$confirm" = "N" ]; then
       echo "cancelled"; exit 1
     else
