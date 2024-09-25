@@ -97,6 +97,7 @@ if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
 fi
 
 TRACK_LIST=$(cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
+echo "Renaming files..."
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
 count=1
 for flac_file in *.flac; do
@@ -104,9 +105,11 @@ for flac_file in *.flac; do
     new_filename="${track_name}.flac"
 
     if [ "$flac_file" != "$new_filename" ]; then
+        echo "renaming '$flac_file' to '$new_filename'"
         mv "$flac_file" "$new_filename"
+    else
+        echo "'$flac_file' is already correctly named."
     fi
-
     ((count++))
 done
 
