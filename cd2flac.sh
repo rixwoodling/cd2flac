@@ -115,13 +115,19 @@ PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 TRACK_LIST=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" )
 echo "Renaming files..."
 cd "$PATH_FLAC/"
-#for file in *.flac; do
-#  echo -n "$file --> "; echo "$TRACK_LIST"
+#for i in *.flac; do
+  #echo -n "$track --> "; echo "$TRACK_LIST"
 #done
 
 while read -r line; do
     echo "$line"
 done <<< "$TRACK_LIST"
+
+count=1
+for line in "$TRACK_LIST"; do
+    echo "Loop $count: $line"
+    ((count++))
+done
   
 #echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
 #if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
