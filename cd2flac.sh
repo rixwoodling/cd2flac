@@ -81,8 +81,11 @@ ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//'
 TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
 FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
 
-# RIP CD IF REQUIRED
-if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
+# Skip CD check and proceed to rename if track totals match
+if [ "$TRACK_TOTAL" -eq "$FLAC_TOTAL" ]; then
+    echo "Track totals match. Proceeding to rename files..."
+else
+    # RIP CD IF REQUIRED
     CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
     if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
         echo "track mismatch"
@@ -107,8 +110,6 @@ for flac_file in *.flac; do
     if [ "$flac_file" != "$new_filename" ]; then
         echo "renaming '$flac_file' to '$new_filename'"
         mv "$flac_file" "$new_filename"
-    else
-        echo "'$flac_file' is already correctly named."
     fi
     ((count++))
 done
