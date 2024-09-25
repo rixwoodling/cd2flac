@@ -111,24 +111,38 @@ if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
 fi
 
 #
-PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
-TRACK_LIST=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" )
-echo "Renaming files..."
-cd "$PATH_FLAC/"
+#PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+#TRACK_LIST=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" )
+#echo "Renaming files..."
+#cd "$PATH_FLAC/"
 #for i in *.flac; do
   #echo -n "$track --> "; echo "$TRACK_LIST"
 #done
 
-while read -r line; do
-    echo "$line"
-done <<< "$TRACK_LIST"
+#count=1
+#for line in "$TRACK_LIST"; do
+    #echo "Loop $count: $line"
+    #((count++))
+#done
+
+PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+TRACK_LIST=$(cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
+
+echo "Renaming files..."
+cd "$PATH_FLAC" || exit 1
 
 count=1
-for line in "$TRACK_LIST"; do
-    echo "Loop $count: $line"
+
+
+
+for flac_file in *.flac; do
+    track_name=$(echo "$TRACK_LIST" | sed -n "${count}p")
+    new_filename="${track_name}.flac"
+    mv "$flac_file" "$new_filename"
     ((count++))
 done
-  
+
+
 #echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
 #if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
 #echo "track total matches csv"
