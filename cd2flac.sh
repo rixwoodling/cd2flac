@@ -101,7 +101,7 @@ sleep 1
 # Rename files
 TRACK_LIST=$(cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
 echo "Renaming files..."
-cd "$PATH_FLAC" || exit 1
+[ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
 count=1
 for flac_file in *.flac; do
     track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | sed 's/, /__/g' | awk -F, '{print $8,$9}' | sed 's/__/, /' | sed 's/\"//g' )
