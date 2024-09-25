@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# ERROR CHECKS
-# Check if argument is provided, if not, show help message
+# Check if argument is provided
 if [ -z "$1" ]; then
   echo "Usage: sh cd2flac.sh <CD_IDENTIFIER>"
   echo "Example: sh cd2flac.sh '0630-18677-2'"
   exit 1
 fi
 
-# Check for cdparanoia and flac
+# Check for necessary commands
 if ! command -v cdparanoia &> /dev/null; then echo "cdparanoia is not installed."; exit 1; fi
 if ! command -v flac &> /dev/null; then echo "flac is not installed."; exit 1; fi
 
@@ -19,102 +18,94 @@ argument=$( grep -i "$1" csv/music.csv )
 
 # Search for argument in csv, if no matches, exit
 if [ -z "$argument" ]; then 
-echo "no matches found for '$1' in csv/music.csv"; exit 1; fi
+    echo "no matches found for '$1' in csv/music.csv"
+    exit 1
+fi
 
 # SELECT ALBUM
-if [ ! -z "$argument" ]; then
 matches=$( cat csv/music.csv | tail -n +2 | grep "$argument" | \
 sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | \
 sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
 
-  if [ -z "$matches" ]; then
-    echo "invalid selection. exiting."; exit 1; fi
+if [ -z "$matches" ]; then
+    echo "invalid selection. exiting."
+    exit 1
+fi
 
-  if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
+if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
     selected_line="$matches"
     echo "$selected_line" | nl
-
     echo -n "confirm [y/n]? "
     read -r confirm
-    if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
-        # Proceed silently
-        :
-    elif [ "$confirm" = "n" ] || [ "$confirm" = "N" ]; then
+    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
         echo "cancelled"
         exit 1
-    else
-        echo "invalid selection. select 'y' or 'n'."
-        exit 1
     fi
-
-  elif [ $( echo "$matches" | wc -l ) -gt 1 ]; then
+elif [ $( echo "$matches" | wc -l ) -gt 1 ]; then
     echo "$matches" | nl
     echo -n "select 1-$( echo "$matches" | nl | wc -l ): "
     read -r selection
-    
-    # Minimal input validation check
     if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $( echo "$matches" | wc -l ) ]; then
         echo "Invalid selection. Exiting."
         exit 1
     fi
-    
     selected_line=$( echo "$matches" | sed -n "${selection}p" )
     echo "you selected:"
     echo "$selected_line"
 else
     echo "no matches found."
     exit 1
-fi  # <-- The 'fi' here closes the entire 'if'-'elif'-'else' block
-
-
 fi
 
-# PARSE CSV FOR VALUES
+# Parse CSV for values
 ALBUM_ARTIST="$( echo "$selected_line" | awk -F' - ' '{print $1}' )"
 ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//' )"
 
-# create flac directory if not created
-if [ ! -d "flac" ]; then mkdir "flac"; fi
+# Create directories if not present
+[ ! -d "flac" ] && mkdir "flac"
+[ ! -d "flac/$ALBUM_ARTIST" ] && mkdir "flac/$ALBUM_ARTIST"
+[ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ] && mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
-# create album artist directory if not created
-if [ ! -d "flac/$ALBUM_ARTIST" ]; then mkdir "flac/$ALBUM_ARTIST"; fi
+sleep 1  # Ensure filesystem sync
 
-# create album artist directory if not created
-if [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ]; then mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"; fi
+# Clean path and ensure the directory exists
+PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+PATH_FLAC=$(echo "$PATH_FLAC" | tr -d '\r' | tr -d '[:space:]')
 
-# get values from selected_line and parse csv for track total  
+if [ ! -d "$PATH_FLAC" ]; then
+    echo "Error: Directory $PATH_FLAC does not exist or cannot be accessed."
+    exit 1
+fi
+
+# Get artist, album, year, and attributes from the selected line
 ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
-ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//')
+ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//' )
 YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
-ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//')
+ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//' )
+
+# Get track and FLAC totals
+TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
 
 # RIP CD IF REQUIRED
-# get total number of tracks for selection in csv
-TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
-# get number of flac files in directory
-FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
-# if flac files and track totals in csv are not equal
 if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
-  # get total number of tracks on CD
-  CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
-  if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
-    echo "track mismatch"; exit 1
-  # change to nested directory
-  else
-    echo "start ripping..."
-    cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
-    # rip cd to aiff and convert to flac
-    cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-    cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-    flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-  fi
+    CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
+    if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
+        echo "track mismatch"
+        exit 1
+    else
+        echo "start ripping..."
+        cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+        cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
+        cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
+        flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
+    fi
 fi
 
 sleep 1
 
-PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+# Rename files
 TRACK_LIST=$(cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
-
 echo "Renaming files..."
 cd "$PATH_FLAC" || exit 1
 count=1
