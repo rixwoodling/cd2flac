@@ -96,17 +96,17 @@ if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
     fi
 fi
 
-sleep 1
-
-# Rename files
 TRACK_LIST=$(cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
-echo "Renaming files..."
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
 count=1
 for flac_file in *.flac; do
     track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | sed 's/, /__/g' | awk -F, '{print $8,$9}' | sed 's/__/, /' | sed 's/\"//g' )
     new_filename="${track_name}.flac"
-    mv "$flac_file" "$new_filename"
+
+    if [ "$flac_file" != "$new_filename" ]; then
+        mv "$flac_file" "$new_filename"
+    fi
+
     ((count++))
 done
 
