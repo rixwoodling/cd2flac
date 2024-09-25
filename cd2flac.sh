@@ -115,9 +115,9 @@ PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 TRACK_LIST=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" )
 echo "Renaming files..."
 cd "$PATH_FLAC/"
-for file in *.flac; do
-  echo -n "$file --> "; echo "$TRACK_LIST"
-done
+#for file in *.flac; do
+#  echo -n "$file --> "; echo "$TRACK_LIST"
+#done
 
 while read -r line; do
     echo "$line"
