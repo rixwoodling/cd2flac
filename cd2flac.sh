@@ -110,21 +110,6 @@ if [ "$TRACK_TOTAL" -ne "$FLAC_TOTAL" ]; then
   fi
 fi
 
-#
-#PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
-#TRACK_LIST=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" )
-#echo "Renaming files..."
-#cd "$PATH_FLAC/"
-#for i in *.flac; do
-  #echo -n "$track --> "; echo "$TRACK_LIST"
-#done
-
-#count=1
-#for line in "$TRACK_LIST"; do
-    #echo "Loop $count: $line"
-    #((count++))
-#done
-
 sleep 1
 
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
@@ -140,44 +125,4 @@ for flac_file in *.flac; do
     ((count++))
 done
 
-
-#echo $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"/*.flac | wc -l )
-#if [ "$TRACK_TOTAL" -eq $( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep "*.flac" | wc -l ) ]; then 
-#echo "track total matches csv"
-#else
-#echo "track toatl does not match csv"
-#fi
-# If multiple matches are found, display the list and ask the user to select
-# if [ "$( echo $ | wc -l ) -gt 1 ]; then
-#  echo "Multiple matches found for '$1':"
-#  matches=$( cat csv/music.csv | grep "$1" | sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq )
-#  echo "$matches" | nl
-#  echo "Please select the number corresponding to the correct album:"
-#  read -r selection
-
-  # Validate the user's input
-#  selected_line=$( echo "$matches" | sed -n "${selection}p" )
-#  if [ -z "$selected_line" ]; then
-#    echo "Invalid selection. Exiting."
-#    exit 1
-#  fi
-#fi
-  # Extract the CD identifier from the selected line (assuming it's in the first column)
-#  cd_identifier=$(echo "$selected_line" | cut -d',' -f1)
-#else
-#  # Only one match, so we use it directly
-#  cd_identifier=$(echo "$matches" | cut -d',' -f1)
-#fi
-
-# Rip CD to AIFF and convert to FLAC
-#cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
-#cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
-#flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-
-#echo "START RIPPING"
-#echo "done"
-
-# Call the Python script with the selected CD identifier as an argument
-#python3 meta2flac.py "$cd_identifier"
-
-
+#
