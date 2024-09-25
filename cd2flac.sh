@@ -70,12 +70,6 @@ sleep 1  # Ensure filesystem sync
 
 # Clean path and ensure the directory exists
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
-PATH_FLAC=$(echo "$PATH_FLAC" | tr -d '\r' | tr -d '[:space:]')
-
-if [ ! -d "$PATH_FLAC" ]; then
-    echo "Error: Directory $PATH_FLAC does not exist or cannot be accessed."
-    exit 1
-fi
 
 # Get artist, album, year, and attributes from the selected line
 ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
