@@ -132,7 +132,7 @@ echo "Renaming files..."
 cd "$PATH_FLAC" || exit 1
 count=1
 for flac_file in *.flac; do
-    track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $9}' )
+    track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | sed 's/, /__/g' | awk -F, '{print $8,$9}' | sed 's/__/, /' | sed 's/\"//g' )
     new_filename="${track_name}.flac"
     mv "$flac_file" "$new_filename"
     ((count++))
