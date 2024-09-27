@@ -102,7 +102,7 @@ fi
 # Read the track list from music.csv
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
 
-echo "Renaming files..."
+# move to target flac dir if not currently there
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
 
 count=1
