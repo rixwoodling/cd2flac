@@ -76,6 +76,7 @@ ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
 ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//' )
 YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
 ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//' )
+echo "$ARTIST"; echo "$ALBUM"; echo "$YEAR"; echo "$ATTRIBUTES" # DEBUG
 
 # Get track and FLAC totals
 TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
