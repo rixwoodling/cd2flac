@@ -102,6 +102,7 @@ else
 fi
 # Read the track list from music.csv
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
+echo "$TRACK_LIST"
 
 echo "Renaming files..."
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
