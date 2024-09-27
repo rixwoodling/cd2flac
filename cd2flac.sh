@@ -76,7 +76,6 @@ ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
 ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//' )
 YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
 ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//' )
-echo "$ARTIST"; echo "$ALBUM"; echo "$YEAR"; echo "$ATTRIBUTES" # DEBUG
 
 # Get track and FLAC totals
 TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
@@ -102,7 +101,6 @@ else
 fi
 # Read the track list from music.csv
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
-echo "$TRACK_LIST"
 
 echo "Renaming files..."
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
@@ -111,7 +109,6 @@ count=1
 for flac_file in *.flac; do
     # Extract the track name from the CSV
     track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8,$9}')
-    echo "$track_name"
 
     # Make sure track_name is not empty
     if [ -z "$track_name" ]; then
