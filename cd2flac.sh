@@ -88,7 +88,8 @@ else
     # RIP CD IF REQUIRED
     CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
     if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
-        echo "track mismatch"
+        echo "Either number of tracks mismatch CD,"
+        echo "or CD tracks not found."
         exit 1
     else
         echo "start ripping..."
