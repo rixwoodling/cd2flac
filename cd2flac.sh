@@ -111,6 +111,7 @@ count=1
 for flac_file in *.flac; do
     # Extract the track name from the CSV
     track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8}')
+    echo "$track_name"
 
     # Make sure track_name is not empty
     if [ -z "$track_name" ]; then
