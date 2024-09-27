@@ -99,20 +99,35 @@ else
         flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
     fi
 fi
+# Read the track list from music.csv
+TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
 
-TRACK_LIST=$(cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
 echo "Renaming files..."
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
+
 count=1
 for flac_file in *.flac; do
-    track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | sed 's/, /__/g' | awk -F, '{print $8,$9}' | sed 's/__/, /' | sed 's/\"//g' )
+    # Extract the track name from the CSV
+    track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8}')
+
+    # Make sure track_name is not empty
+    if [ -z "$track_name" ]; then
+        echo "Error: Track name is empty for track $count. Skipping..."
+        ((count++))
+        continue
+    fi
+
+    # Create the new filename
     new_filename="${track_name}.flac"
 
+    # Rename the file if necessary
     if [ "$flac_file" != "$new_filename" ]; then
-        echo "renaming '$flac_file' to '$new_filename'"
+        echo "Renaming '$flac_file' to '$new_filename'"
         mv "$flac_file" "$new_filename"
     fi
     ((count++))
 done
+
+
 
 #
