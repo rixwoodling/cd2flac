@@ -66,7 +66,7 @@ ALBUM_YEAR_ATTR="$( echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[
 [ ! -d "flac/$ALBUM_ARTIST" ] && mkdir "flac/$ALBUM_ARTIST"
 [ ! -d "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" ] && mkdir "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
-sleep 1  # Ensure filesystem sync
+wait  # Ensure filesystem sync
 
 # Clean path and ensure the directory exists
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
