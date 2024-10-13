@@ -171,5 +171,5 @@ id,genre,albumartist,artist,album,year,disc,track,title,label,catalog_number,med
 171,Heavy Metal,Metallica,Metallica,Metallica,1991,1,10,The God That Failed,Columbia,SMP 3057.2,CD,HK
 172,Heavy Metal,Metallica,Metallica,Metallica,1991,1,11,My Friend of Misery,Columbia,SMP 3057.2,CD,HK
 173,Heavy Metal,Metallica,Metallica,Metallica,1991,1,12,The Struggle Within,Columbia,SMP 3057.2,CD,HK
-174,Heavy Metal,Metallica,Metallica,Metallica,1991,1,13,So What,Columbia,SMP 3057.2,CD,HK
+174,Heavy Metal,Metallica,Metallica,Metallica,1991,1,13,So What?,Columbia,SMP 3057.2,CD,HK
 .
