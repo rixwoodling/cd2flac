@@ -97,20 +97,20 @@ else
         cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
         cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
         flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-        wait
+        echo "1"
     fi
 fi
 # Read the track list from music.csv
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
-
+echo "2"
 # move to target flac dir if not currently there
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
-
+echo "3"
 count=1
 for flac_file in *.flac; do
     # Extract the track name from the CSV
     track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8,$9}')
-
+    echo "4"
     # Make sure track_name is not empty
     if [ -z "$track_name" ]; then
         echo "Error: Track name is empty for track $count. Skipping..."
