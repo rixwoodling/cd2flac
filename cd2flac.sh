@@ -93,36 +93,25 @@ else
         exit 1
     else
         echo "start ripping..."
-        cd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+        pushd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
         cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
         cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
         flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
-        echo "1"
+        popd
     fi
 fi
 # Read the track list from music.csv
 # Extract track list from the CSV
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
 
-# Wait until the TRACK_LIST is populated
-while [ -z "$TRACK_LIST" ]; do
-    echo "Waiting for TRACK_LIST to be populated..."
-    # Optionally, you can sleep for a few seconds to avoid tight looping
-    sleep 2
-
-    # Reattempt to fetch the track list
-    TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
-done
-
-echo "2"
 # move to target flac dir if not currently there
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
-echo "3"
+
 count=1
 for flac_file in *.flac; do
     # Extract the track name from the CSV
     track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8,$9}')
-    echo "4"
+    
     # Make sure track_name is not empty
     if [ -z "$track_name" ]; then
         echo "Error: Track name is empty for track $count. Skipping..."
