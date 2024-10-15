@@ -101,7 +101,19 @@ else
     fi
 fi
 # Read the track list from music.csv
+# Extract track list from the CSV
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
+
+# Wait until the TRACK_LIST is populated
+while [ -z "$TRACK_LIST" ]; do
+    echo "Waiting for TRACK_LIST to be populated..."
+    # Optionally, you can sleep for a few seconds to avoid tight looping
+    sleep 2
+
+    # Reattempt to fetch the track list
+    TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
+done
+
 echo "2"
 # move to target flac dir if not currently there
 [ "$PWD" != "$PATH_FLAC" ] && cd "$PATH_FLAC"
