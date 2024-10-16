@@ -141,4 +141,57 @@ for flac_file in *.flac; do
     metaflac --remove-all-tags "$flac_file"
 done
 
+# Define static metadata (should already be set somewhere earlier in your script)
+GENRE="Rock"  # Example, adjust this based on your data
+ALBUM_ARTIST="$ALBUM_ARTIST"  # Album artist is already set earlier
+ALBUM="$ALBUM"
+YEAR="$YEAR"
+LABEL="YourLabel"
+CATALOG_NUMBER="0630-18677-2"
+MEDIA_SOURCE="CD"
+ATTRIBUTES="$ATTRIBUTES"
+
+# Loop through each .flac file and add metadata
+count=1
+for flac_file in *.flac; do
+    # Extract dynamic metadata from TRACK_LIST
+    track_data=$(echo "$TRACK_LIST" | sed -n "${count}p")
+    DISC_NUMBER=$(echo "$track_data" | awk -F',' '{print $7}')   # Disc number
+    TRACK_NUMBER=$(echo "$track_data" | awk -F',' '{print $8}')  # Track number
+    TRACK_TITLE=$(echo "$track_data" | awk -F',' '{print $9}')   # Track title
+    ARTIST=$(echo "$track_data" | awk -F',' '{print $3}')        # Track artist
+    
+    # Ensure that dynamic metadata is not empty
+    if [ -z "$DISC_NUMBER" ] || [ -z "$TRACK_NUMBER" ] || [ -z "$TRACK_TITLE" ] || [ -z "$ARTIST" ]; then
+        echo "Error: Missing metadata for track $count. Skipping..."
+        ((count++))
+        continue
+    fi
+
+    # Clear existing metadata
+    echo "Clearing metadata for '$flac_file'"
+    metaflac --remove-all-tags "$flac_file"
+    
+    # Add static metadata
+    echo "Adding metadata for '$flac_file'"
+    metaflac --set-tag="GENRE=$GENRE" \
+             --set-tag="ALBUMARTIST=$ALBUM_ARTIST" \
+             --set-tag="ALBUM=$ALBUM" \
+             --set-tag="YEAR=$YEAR" \
+             --set-tag="LABEL=$LABEL" \
+             --set-tag="CATALOGNUMBER=$CATALOG_NUMBER" \
+             --set-tag="MEDIASOURCE=$MEDIA_SOURCE" \
+             --set-tag="ATTRIBUTES=$ATTRIBUTES" "$flac_file"
+    
+    # Add dynamic metadata for each track
+    metaflac --set-tag="DISCNUMBER=$DISC_NUMBER" \
+             --set-tag="TRACKNUMBER=$TRACK_NUMBER" \
+             --set-tag="TITLE=$TRACK_TITLE" \
+             --set-tag="ARTIST=$ARTIST" "$flac_file"
+    
+    echo "Metadata added for '$flac_file'"
+
+    ((count++))
+done
+
 #
