@@ -135,6 +135,10 @@ fi
     ((count++))
 done
 
-
+# Clear metadata for each .flac file before adding new metadata
+for flac_file in *.flac; do
+    echo "Clearing metadata for '$flac_file'"
+    metaflac --remove-all-tags "$flac_file"
+done
 
 #
