@@ -124,10 +124,14 @@ for flac_file in *.flac; do
     new_filename="${track_name}.flac"
 
     # Rename the file if necessary
+    track_number=$(echo "$new_filename" | awk '{print $1}') # Extract the track number
+
     if [ "$flac_file" != "$new_filename" ]; then
-        echo "Renaming '$flac_file' to '$new_filename'"
-        mv "$flac_file" "$new_filename"
-    fi
+      echo "Renaming '$flac_file' to '$new_filename'"
+      mv "$flac_file" "$new_filename"
+    elif [ "$flac_file" = "$new_filename" ]; then
+      echo "Track $track_number already named '$new_filename'"
+fi
     ((count++))
 done
 
