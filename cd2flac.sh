@@ -71,20 +71,14 @@ wait  # Ensure filesystem sync
 # Clean path and ensure the directory exists
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
-# Get artist, album, year, and attributes from the selected line
-ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
-ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//' )
-YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
-ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//' )
+# Check if CD is inserted using udevadm
+cd_inserted=$(udevadm --query=all --name=/dev/sr0 | grep 'ID_CDROM_MEDIA=1')
 
-# Get track and FLAC totals
-TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
-FLAC_TOTAL=$( ls "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR" | grep ".flac" | wc -l )
-
-# Skip CD check and proceed to rename if track totals match
-if [ "$TRACK_TOTAL" -eq "$FLAC_TOTAL" ]; then
-    echo "Track totals match. Proceeding to rename files..."
-else
+# Proceed with CD ripping if a CD is detected
+if [ -n "$cd_inserted" ]; then
+    echo "CD detected, checking track totals..."
+    TRACK_TOTAL=$( cat "csv/music.csv" | grep "$ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l )
+    
     # RIP CD IF REQUIRED
     CD_TOTAL=$( cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l )
     if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then 
@@ -92,7 +86,7 @@ else
         echo "or CD tracks not found."
         exit 1
     else
-        echo "start ripping..."
+        echo "Start ripping..."
         pushd "flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
         cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
         cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
@@ -100,7 +94,16 @@ else
         popd 1>/dev/null
         echo
     fi
+else
+    echo "No CD detected, skipping ripping process and proceeding to metadata."
 fi
+
+# Get artist, album, year, and attributes from the selected line
+ARTIST=$( echo "$selected_line" | sed 's/\ \-\ .*//' )
+ALBUM=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/.*(//' | rev | sed 's/[[:space:]]\+$//' )
+YEAR=$( echo "$selected_line" | sed 's/.* \-\ //' | rev | sed 's/(.*//' | rev | sed 's/).*//' )
+ATTRIBUTES=$( echo "$selected_line" | rev | sed 's/).*//' | rev | sed 's/^ \[//' | sed 's/\]//' )
+
 # Read the track list from music.csv
 # Extract track list from the CSV
 TRACK_LIST=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES")
@@ -143,6 +146,7 @@ for flac_file in *.flac; do
     metaflac --remove-all-tags "$flac_file"
 done
 
+if false; then
 # Define static metadata (should already be set somewhere earlier in your script)
 GENRE="Rock"  # Example, adjust this based on your data
 ALBUM_ARTIST="$ALBUM_ARTIST"  # Album artist is already set earlier
@@ -195,5 +199,4 @@ for flac_file in *.flac; do
 
     ((count++))
 done
-
-#
+fi
