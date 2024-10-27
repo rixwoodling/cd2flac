@@ -72,7 +72,7 @@ wait  # Ensure filesystem sync
 PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
 
 # Check if CD is inserted using udevadm
-cd_inserted=$(udevadm --query=all --name=/dev/sr0 | grep 'ID_CDROM_MEDIA=1')
+cd_inserted=$(udevadm info --query=all --name=/dev/sr0 | grep 'ID_CDROM_MEDIA=1')
 
 # Proceed with CD ripping if a CD is detected
 if [ -n "$cd_inserted" ]; then
