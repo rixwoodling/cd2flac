@@ -140,13 +140,13 @@ done
 
 ### METADATA
 
+if false; then
 # Clear metadata for each .flac file before adding new metadata
 for flac_file in *.flac; do
     echo "Clearing metadata for '$flac_file'"
     metaflac --remove-all-tags "$flac_file"
 done
 
-if false; then
 # Define static metadata (should already be set somewhere earlier in your script)
 GENRE="Rock"  # Example, adjust this based on your data
 ALBUM_ARTIST="$ALBUM_ARTIST"  # Album artist is already set earlier
