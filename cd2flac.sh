@@ -1,19 +1,20 @@
 #!/bin/bash
 
-# Check if argument is provided
+# check if argument is provided
 if [ -z "$1" ]; then
   echo "Usage: sh cd2flac.sh <CD_IDENTIFIER>"
   echo "Example: sh cd2flac.sh '0630-18677-2'"
   exit 1
 fi
 
-# Check for necessary commands
+# verify cdparanoia and flac are installed
 if ! command -v cdparanoia &> /dev/null; then echo "cdparanoia is not installed."; exit 1; fi
 if ! command -v flac &> /dev/null; then echo "flac is not installed."; exit 1; fi
 
-# Check if music.csv exists
+# check if music.csv exists
 if [ ! -f "csv/music.csv" ]; then echo "csv/music.csv file not found!"; exit 1; fi
 
+# check if argument is found in csv file
 argument=$( grep -i "$1" csv/music.csv )
 
 # Search for argument in csv, if no matches, exit
@@ -37,7 +38,7 @@ if [ $( echo "$matches" | wc -l ) -eq 1 ]; then
     echo "$selected_line" | nl
     echo -n "confirm [y/n]? "
     read -r confirm
-    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ] && [ "$confirm" != "1" ]; then
         echo "cancelled"
         exit 1
     fi
