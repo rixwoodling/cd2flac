@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Function to sanitize album names (remove leading periods)
+sanitize_name() {
+    local name="$1"
+    echo "$name" | sed 's/^[.]*//'
+}
+
 # Function to check prerequisites
 check_prerequisites() {
     if ! command -v cdparanoia &> /dev/null; then
@@ -89,8 +95,12 @@ main() {
     ALBUM_ARTIST=$(echo "$selected_line" | awk -F' - ' '{print $1}')
     ALBUM_YEAR_ATTR=$(echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
 
+    # Sanitize album artist and album name to remove leading periods
+    SANITIZED_ALBUM_ARTIST=$(sanitize_name "$ALBUM_ARTIST")
+    SANITIZED_ALBUM_YEAR_ATTR=$(sanitize_name "$ALBUM_YEAR_ATTR")
+
     # Create directories if not present
-    PATH_FLAC="flac/$ALBUM_ARTIST/$ALBUM_YEAR_ATTR"
+    PATH_FLAC="flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR"
     mkdir -p "$PATH_FLAC"
 
     if check_cd_inserted; then
