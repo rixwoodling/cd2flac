@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Function to sanitize album names (remove leading periods)
+# Function to sanitize album and artist names (remove leading periods)
 sanitize_name() {
     local name="$1"
     echo "$name" | sed 's/^[.]*//'
@@ -53,7 +53,7 @@ select_album() {
         echo "$matches" | nl
         echo -n "select 1-$(echo "$matches" | nl | wc -l): "
         read -r selection
-        if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $(echo "$matches" | wc -l) ]; then
+        if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $(echo "$matches" | wc -l) ]]; then
             echo "Invalid selection. Exiting."
             exit 1
         fi
@@ -70,6 +70,21 @@ rip_cd() {
     cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
     flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
     popd > /dev/null
+}
+
+# Function to check if the directory already exists, ignoring leading periods
+find_existing_directory() {
+    local base_dir="$1"
+    local sanitized_name
+    sanitized_name=$(sanitize_name "$base_dir")
+
+    # Check if a sanitized directory exists
+    if [ -d "$sanitized_name" ]; then
+        echo "$sanitized_name"
+    else
+        # If not found, return the original sanitized name
+        echo "$sanitized_name"
+    fi
 }
 
 # Main function
@@ -99,13 +114,12 @@ main() {
     SANITIZED_ALBUM_ARTIST=$(sanitize_name "$ALBUM_ARTIST")
     SANITIZED_ALBUM_YEAR_ATTR=$(sanitize_name "$ALBUM_YEAR_ATTR")
 
-    # Create directories if not present
-    PATH_FLAC="flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR"
+    # Find or create the appropriate directory
+    PATH_FLAC=$(find_existing_directory "flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR")
     mkdir -p "$PATH_FLAC"
 
     if check_cd_inserted; then
         echo "CD detected, checking track totals..."
-        # Ensure track totals match before ripping
         TRACK_TOTAL=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
         CD_TOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
 
@@ -119,6 +133,8 @@ main() {
     else
         echo "No CD detected, skipping ripping process and proceeding to metadata."
     fi
+
+    # Proceed with metadata logic if needed...
 }
 
 # Run the main function
