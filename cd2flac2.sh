@@ -72,21 +72,6 @@ rip_cd() {
     popd > /dev/null
 }
 
-# Function to check if the directory already exists, ignoring leading periods
-find_existing_directory() {
-    local base_dir="$1"
-    local sanitized_name
-    sanitized_name=$(sanitize_name "$base_dir")
-
-    # Check if a sanitized directory exists
-    if [ -d "$sanitized_name" ]; then
-        echo "$sanitized_name"
-    else
-        # If not found, return the original sanitized name
-        echo "$sanitized_name"
-    fi
-}
-
 # Main function
 main() {
     if [ -z "$1" ]; then
@@ -114,8 +99,8 @@ main() {
     SANITIZED_ALBUM_ARTIST=$(sanitize_name "$ALBUM_ARTIST")
     SANITIZED_ALBUM_YEAR_ATTR=$(sanitize_name "$ALBUM_YEAR_ATTR")
 
-    # Find or create the appropriate directory
-    PATH_FLAC=$(find_existing_directory "flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR")
+    # Always create sanitized directories to avoid hidden folders
+    PATH_FLAC="flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR"
     mkdir -p "$PATH_FLAC"
 
     if check_cd_inserted; then
@@ -134,7 +119,35 @@ main() {
         echo "No CD detected, skipping ripping process and proceeding to metadata."
     fi
 
-    # Proceed with metadata logic if needed...
+    # Move to the sanitized directory if it's not the current working directory
+    if [ "$PWD" != "$PATH_FLAC" ]; then
+        cd "$PATH_FLAC" || { echo "Error: Directory $PATH_FLAC not found."; exit 1; }
+    fi
+
+    # Rename files if any are found
+    count=1
+    for flac_file in *.flac; do
+        # Extract track name from CSV
+        track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8,$9}')
+        
+        if [ -z "$track_name" ]; then
+            echo "Error: Track name is empty for track $count. Skipping..."
+            ((count++))
+            continue
+        fi
+
+        # Create the new filename
+        new_filename="${track_name}.flac"
+
+        # Rename the file
+        if [ "$flac_file" != "$new_filename" ]; then
+            echo "Renaming '$flac_file' to '$new_filename'"
+            mv "$flac_file" "$new_filename"
+        else
+            echo "Track $count already named correctly as '$new_filename'"
+        fi
+        ((count++))
+    done
 }
 
 # Run the main function
