@@ -39,9 +39,10 @@ function confirm_match() {
 
 # Function to get matches from CSV
 function get_matches() {
-    grep -i "$1" csv/music.csv | tail -n +2 | \
+    HITS=$( grep -i "$1" csv/music.csv | tail -n +2 | \
     sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | \
-    sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq | sort
+    sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
+    echo "$HITS"
 }
 
 
