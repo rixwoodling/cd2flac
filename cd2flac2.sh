@@ -5,7 +5,6 @@ function help() {
   echo "HOW TO USE"
   echo "sh cd2flac.sh beatles"
   echo "sh cd2flac.sh 1999"
-  exit 0
   fi
 }
 
