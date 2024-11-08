@@ -33,17 +33,25 @@ function confirm_match() {
     fi
 }
 
+# Function to get matches from CSV
+function get_matches() {
+    grep -i "$1" csv/music.csv | tail -n +2 | \
+    sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | \
+    sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq | sort
+}
+
+
+# Function to check CD detection
+function check_cd_inserted() {
+    udevadm info --query=all --name=/dev/sr0 | grep -q 'ID_CDROM_MEDIA=1'
+}
+
 # Function to sanitize album and artist names (remove leading periods)
 sanitize_name() {
     local name="$1"
     echo "$name" | sed 's/^[.]*//'
 }
 
-
-# Function to check CD detection
-check_cd_inserted() {
-    udevadm info --query=all --name=/dev/sr0 | grep -q 'ID_CDROM_MEDIA=1'
-}
 
 # Function to get matches from CSV
 get_matches() {
@@ -98,6 +106,16 @@ main() {
     check_prerequisites
     # verify argument is found in csv database
     confirm_match
+    # check if cd is inserted into cd player
+
+
+    
+    check_cd_inserted
+    if [[ $? -eq 0 ]]; then
+        # if CD inserted, 
+        # 
+        echo "CD is inserted. Starting to rip..."
+    fi
     
 
     matches=$(get_matches "$argument")
