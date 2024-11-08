@@ -22,7 +22,7 @@ check_prerequisites() {
         exit 1
     fi
     if [ ! -f "csv/music.csv" ]; then
-        echo "csv/music.csv file not found!"
+        echo "csv/music.csv file not found! :("
         exit 1
     fi
 }
@@ -47,7 +47,7 @@ function choose_album() {
         echo -n "confirm [y/n]? "
         read -r CONFIRM
         if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
-            echo "cancelled"
+            echo "invalid selection. cancelled. :("
             exit 1
         fi
         echo "$HITS"
@@ -56,7 +56,7 @@ function choose_album() {
         echo -n "select 1-$(echo "$HITS" | nl | wc -l): "
         read -r SELECTION
         if ! [[ "$SELECTION" =~ ^[0-9]+$ ]] || [ "$SELECTION" -lt 1 ] || [ "$SELECTION" -gt $(echo "$HITS" | wc -l) ]]; then
-            echo "invalid selection. exiting."
+            echo "invalid selection. exiting. :("
             exit 1
         fi
         echo "$(echo "$HITS" | sed -n "${SELECTION}p")"
