@@ -111,6 +111,8 @@ main() {
     
     echo "$MATCH"
     echo "$ALBUM_ARTIST"
+    echo "$ALBUM_YEAR_ATTR"
+    
 #    echo "$HITS"
 #    check_cd_inserted # check if cd is inserted into cd player 
 #    if [[ $? -eq 0 ]]; then
