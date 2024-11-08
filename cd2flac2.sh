@@ -42,7 +42,10 @@ function get_matches() {
     HITS=$( grep -i "$1" csv/music.csv | tail -n +2 | \
     sed 's/, /__/g' | awk -F',' '{print $3" - "$5,"("$6")","["$13"]"}' | \
     sed 's/\[\]//' | sed 's/__/, /g' | sed 's/\"//g' | uniq | sort )
-    echo "$HITS"
+    if [ -z "$HITS" ]; then
+        echo "no matches found for '$1' in csv/music.csv"
+        exit 1
+    fi     
 }
 
 
