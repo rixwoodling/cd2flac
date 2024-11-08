@@ -25,6 +25,14 @@ check_prerequisites() {
     fi
 }
 
+function confirm_match() {
+    argument=$(grep -i "$1" csv/music.csv)
+    if [ -z "$argument" ]; then
+        echo "no matches found for '$1' in csv/music.csv"
+        exit 1
+    fi
+}
+
 # Function to sanitize album and artist names (remove leading periods)
 sanitize_name() {
     local name="$1"
@@ -86,15 +94,11 @@ rip_cd() {
 main() {
     # first run help if argument is blank or help flag called
     help
-    # then check if cdparanoia, flac installed
+    # then check if csv databases exist, and cdparanoia, flac installed
     check_prerequisites
-
-
-    argument=$(grep -i "$1" csv/music.csv)
-    if [ -z "$argument" ]; then
-        echo "no matches found for '$1' in csv/music.csv"
-        exit 1
-    fi
+    # verify argument is found in csv database
+    confirm_match
+    
 
     matches=$(get_matches "$argument")
     selected_line=$(select_album "$matches")
