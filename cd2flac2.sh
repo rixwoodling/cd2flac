@@ -67,6 +67,10 @@ function choose_album() {
     fi
 }
 
+function get_albumartist() {
+    ALBUM_ARTIST=$(echo "$MATCH" | awk -F' - ' '{print $1}')
+    export ALBUM_ARTIST
+}
 
 # Function to check CD detection
 function check_cd_inserted() {
@@ -97,7 +101,9 @@ main() {
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     get_matches "$1" # return a list of formatted matches
     choose_album
+    
     echo "$MATCH"
+    echo "$ALBUM_ARTIST"
 #    echo "$HITS"
 #    check_cd_inserted # check if cd is inserted into cd player 
 #    if [[ $? -eq 0 ]]; then
