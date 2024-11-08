@@ -72,6 +72,11 @@ function get_albumartist() {
     export ALBUM_ARTIST
 }
 
+function get_albumyearattr() {
+    ALBUM_YEAR_ATTR=$(echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
+    export ALBUM_YEAR_ATTR
+}
+
 # Function to check CD detection
 function check_cd_inserted() {
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1'
