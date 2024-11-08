@@ -36,7 +36,7 @@ function get_matches() {
         echo "no matches found for '$1' in csv/music.csv"
         exit 1
     else
-        export "$HITS"
+        export HITS
     fi     
 }
 
