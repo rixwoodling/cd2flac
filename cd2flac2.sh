@@ -27,18 +27,6 @@ check_prerequisites() {
     fi
 }
 
-function confirm_match() {
-    echo "$1"
-    grep -i "$1" csv/music.csv
-    argument=$(grep -i "$1" csv/music.csv)
-    if [ -z "$argument" ]; then
-        echo "no matches found for '$1' in csv/music.csv"
-        exit 1
-    else
-        return "$HITS"
-    fi
-}
-
 # Function to get matches from CSV
 function get_matches() {
     HITS=$( grep -i "$1" csv/music.csv | tail -n +2 | \
