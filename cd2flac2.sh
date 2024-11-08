@@ -29,6 +29,7 @@ check_prerequisites() {
 
 function confirm_match() {
     echo "$1"
+    grep -i "$1" csv/music.csv
     argument=$(grep -i "$1" csv/music.csv)
     if [ -z "$argument" ]; then
         echo "no matches found for '$1' in csv/music.csv"
