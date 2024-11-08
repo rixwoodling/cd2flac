@@ -73,7 +73,7 @@ function get_albumartist() {
 }
 
 function get_album() {
-    ALBUM=$( echo "$MATCH" | rev | sed 's/.*( //' | rev )
+    ALBUM=$(echo "$MATCH" | rev | sed 's/.*( //' | rev | sed 's/.* - //')
     export ALBUM
 }
 
