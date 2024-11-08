@@ -55,7 +55,7 @@ function choose_album() {
         echo "$HITS" | nl
         echo -n "select 1-$(echo "$HITS" | nl | wc -l): "
         read -r SELECTION
-        if ! [[ "$SELECTION" =~ ^[0-9]+$ ]] || [ "$SELECTION" -lt 1 ] || [ "$SELECTION" -gt $(echo "$HITS" | wc -l) ]]; then
+        if ! [[ "$SELECTION" =~ ^[0-9]+$ ]] || [[ "$SELECTION" -lt 1 ]] || [[ "$SELECTION" -gt $(echo "$HITS" | wc -l) ]]; then
             echo "invalid selection. exiting. :("
             exit 1
         fi
