@@ -50,7 +50,6 @@ function choose_album() {
             echo "invalid selection. cancelled. :("
             exit 1
         fi
-        #echo "$HITS"
         MATCH="$HITS"
         export MATCH
     else
@@ -61,7 +60,6 @@ function choose_album() {
             echo "invalid selection. exiting. :("
             exit 1
         fi
-        #echo "$(echo "$HITS" | sed -n "${SELECTION}p")"
         MATCH="$(echo "$HITS" | sed -n "${SELECTION}p")"
         export MATCH
     fi
