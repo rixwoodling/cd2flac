@@ -166,8 +166,8 @@ main() {
 #        fi
 #        ((count++))
 #    done
-#}
+}
 
 # Run the main function
-main "$1"
+main
 
