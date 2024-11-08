@@ -99,76 +99,75 @@ main() {
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     confirm_match "$1" # verify argument is found in csv database
     get_matches # return a list of formatted matches
-    check_cd_inserted # check if cd is inserted into cd player 
-    if [[ $? -eq 0 ]]; then
-        # if CD inserted, 
-        # 
-        echo "CD is inserted. Starting to rip..."
-    fi
-    
-
-    matches=$(get_matches "$argument")
-    selected_line=$(select_album "$matches")
-
-    # Parse values
-    ALBUM_ARTIST=$(echo "$selected_line" | awk -F' - ' '{print $1}')
-    ALBUM_YEAR_ATTR=$(echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
-
-    # Sanitize album artist and album name to remove leading periods
-    SANITIZED_ALBUM_ARTIST=$(sanitize_name "$ALBUM_ARTIST")
-    SANITIZED_ALBUM_YEAR_ATTR=$(sanitize_name "$ALBUM_YEAR_ATTR")
-
-    # Always create sanitized directories to avoid hidden folders
-    PATH_FLAC="flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR"
-    mkdir -p "$PATH_FLAC"
-
-    if check_cd_inserted; then
-        echo "CD detected, checking track totals..."
-        TRACK_TOTAL=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
-        CD_TOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
-
-        if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then
-            echo "Either number of tracks mismatch CD,"
-            echo "or CD tracks not found."
-            exit 1
-        else
-            rip_cd "$PATH_FLAC"
-        fi
-    else
-        echo "No CD detected, skipping ripping process and proceeding to metadata."
-    fi
-
-    # Move to the sanitized directory if it's not the current working directory
-    if [ "$PWD" != "$PATH_FLAC" ]; then
-        cd "$PATH_FLAC" || { echo "Error: Directory $PATH_FLAC not found."; exit 1; }
-    fi
-
-    # Rename files if any are found
-    count=1
-    for flac_file in *.flac; do
-        # Extract track name from CSV
-        track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8,$9}')
-        
-        if [ -z "$track_name" ]; then
-            echo "Error: Track name is empty for track $count. Skipping..."
-            ((count++))
-            continue
-        fi
-
-        # Create the new filename
-        new_filename="${track_name}.flac"
-
-        # Rename the file
-        if [ "$flac_file" != "$new_filename" ]; then
-            echo "Renaming '$flac_file' to '$new_filename'"
-            mv "$flac_file" "$new_filename"
-        else
-            echo "Track $count already named correctly as '$new_filename'"
-        fi
-        ((count++))
-    done
-}
+#    check_cd_inserted # check if cd is inserted into cd player 
+#    if [[ $? -eq 0 ]]; then
+#        # if CD inserted, 
+#        # 
+#        echo "CD is inserted. Starting to rip..."
+#    fi
+#    
+#    matches=$(get_matches "$argument")
+#    selected_line=$(select_album "$matches")
+#
+#    # Parse values
+#    ALBUM_ARTIST=$(echo "$selected_line" | awk -F' - ' '{print $1}')
+#    ALBUM_YEAR_ATTR=$(echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
+#
+#    # Sanitize album artist and album name to remove leading periods
+#    SANITIZED_ALBUM_ARTIST=$(sanitize_name "$ALBUM_ARTIST")
+#    SANITIZED_ALBUM_YEAR_ATTR=$(sanitize_name "$ALBUM_YEAR_ATTR")
+#
+#    # Always create sanitized directories to avoid hidden folders
+#    PATH_FLAC="flac/$SANITIZED_ALBUM_ARTIST/$SANITIZED_ALBUM_YEAR_ATTR"
+#    mkdir -p "$PATH_FLAC"
+#
+#    if check_cd_inserted; then
+#        echo "CD detected, checking track totals..."
+#        TRACK_TOTAL=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
+#        CD_TOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
+#
+#        if [ "$TRACK_TOTAL" -ne "$CD_TOTAL" ]; then
+#            echo "Either number of tracks mismatch CD,"
+#            echo "or CD tracks not found."
+#            exit 1
+#        else
+#            rip_cd "$PATH_FLAC"
+#        fi
+#    else
+#        echo "No CD detected, skipping ripping process and proceeding to metadata."
+#    fi
+#
+#    # Move to the sanitized directory if it's not the current working directory
+#    if [ "$PWD" != "$PATH_FLAC" ]; then
+#        cd "$PATH_FLAC" || { echo "Error: Directory $PATH_FLAC not found."; exit 1; }
+#    fi
+#
+#    # Rename files if any are found
+#    count=1
+#    for flac_file in *.flac; do
+#        # Extract track name from CSV
+#        track_name=$(echo "$TRACK_LIST" | sed -n "${count}p" | awk -F, '{print $8,$9}')
+#        
+#        if [ -z "$track_name" ]; then
+#            echo "Error: Track name is empty for track $count. Skipping..."
+#            ((count++))
+#            continue
+#        fi
+#
+#        # Create the new filename
+#        new_filename="${track_name}.flac"
+#
+#        # Rename the file
+#        if [ "$flac_file" != "$new_filename" ]; then
+#            echo "Renaming '$flac_file' to '$new_filename'"
+#            mv "$flac_file" "$new_filename"
+#        else
+#            echo "Track $count already named correctly as '$new_filename'"
+#        fi
+#        ((count++))
+#    done
+#}
 
 # Run the main function
-main "$@"
+main
 
