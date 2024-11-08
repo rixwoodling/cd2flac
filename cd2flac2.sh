@@ -101,6 +101,7 @@ main() {
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     get_matches "$1" # return a list of formatted matches
     choose_album
+    get_albumartist
     
     echo "$MATCH"
     echo "$ALBUM_ARTIST"
