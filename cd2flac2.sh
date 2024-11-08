@@ -5,10 +5,9 @@ function help() {
   echo "HOW TO USE"
   echo "sh cd2flac.sh beatles"
   echo "sh cd2flac.sh 1999"
-  exit 0
-  else
-  :
+  return 1
   fi
+  return 0
 }
 
 # Function to check prerequisites
@@ -102,7 +101,9 @@ rip_cd() {
 
 # Main function
 main() {
-    help # first run help if argument is blank or help flag called
+    help # run help, exit if argument is blank or help flags called
+    if [[ $? -eq 1 ]]; then exit 1; done
+    
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     confirm_match # verify argument is found in csv database
     get_matches # return a list of formatted matches
