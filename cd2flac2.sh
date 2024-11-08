@@ -12,8 +12,8 @@ function help() {
 # Function to check prerequisites
 check_prerequisites() {
     if ! command -v cdparanoia &> /dev/null; then
-        echo "cdparanoia is not installed."
-        echo "install with --> sudo apt install cdparanoia"
+        echo "cdparanoia is not installed:"
+        echo "sudo apt install cdparanoia"
         exit 1
     fi
     if ! command -v flac &> /dev/null; then
