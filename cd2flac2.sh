@@ -17,7 +17,8 @@ check_prerequisites() {
         exit 1
     fi
     if ! command -v flac &> /dev/null; then
-        echo "flac is not installed."
+        echo "flac is not installed:"
+        echo "sudo apt install flac"
         exit 1
     fi
     if [ ! -f "csv/music.csv" ]; then
