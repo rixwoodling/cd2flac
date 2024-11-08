@@ -99,8 +99,8 @@ rip_cd() {
 main() {
     help "$1" # run help, exit if argument is blank or help flags called
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
-    confirm_match "$1" # verify argument is found in csv database
-#    get_matches # return a list of formatted matches
+#    confirm_match "$1" # verify argument is found in csv database
+    get_matches "$1" # return a list of formatted matches
 #    check_cd_inserted # check if cd is inserted into cd player 
 #    if [[ $? -eq 0 ]]; then
 #        # if CD inserted, 
