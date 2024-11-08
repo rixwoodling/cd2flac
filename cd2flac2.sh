@@ -169,5 +169,5 @@ main() {
 }
 
 # Run the main function
-main
+main "$1"
 
