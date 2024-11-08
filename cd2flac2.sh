@@ -82,6 +82,11 @@ function get_year() {
     export YEAR
 }
 
+function get_attributes() {
+    ATTRIBUTES=$(echo "$MATCH" | rev | sed 's/).*//' | rev | sed 's/.*\[//' | sed 's/\].*//')
+    export ATTRIBUTES
+}
+
 function get_albumyearattr() {
     ALBUM_YEAR_ATTR=$(echo "$MATCH" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
     export ALBUM_YEAR_ATTR
@@ -118,13 +123,14 @@ main() {
     choose_album
     get_albumartist
     get_album
-    get_albumyearattr
     get_year
+    get_attributes
     
     echo "$MATCH"
     echo "$ALBUM_ARTIST"
     echo "$ALBUM"
-    echo "$ALBUM_YEAR_ATTR"
+    echo "$YEAR"
+    echo "$ATTRIBUTES"
     
 #    echo "$HITS"
 #    check_cd_inserted # check if cd is inserted into cd player 
