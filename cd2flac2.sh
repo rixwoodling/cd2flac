@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Function to sanitize album and artist names (remove leading periods)
-sanitize_name() {
-    local name="$1"
-    echo "$name" | sed 's/^[.]*//'
+function help() {
+  if [[ -z "$1" || "$1" == "-h" || "$1" == "--help" ]]; then 
+  echo "HOW TO USE"
+  echo "sh cd2flac.sh beatles"
+  echo "sh cd2flac.sh 1999"
+  exit 1
+  fi
 }
 
 # Function to check prerequisites
@@ -21,6 +24,13 @@ check_prerequisites() {
         exit 1
     fi
 }
+
+# Function to sanitize album and artist names (remove leading periods)
+sanitize_name() {
+    local name="$1"
+    echo "$name" | sed 's/^[.]*//'
+}
+
 
 # Function to check CD detection
 check_cd_inserted() {
@@ -74,13 +84,11 @@ rip_cd() {
 
 # Main function
 main() {
-    if [ -z "$1" ]; then
-        echo "Usage: sh cd2flac.sh <CD_IDENTIFIER>"
-        echo "Example: sh cd2flac.sh '0630-18677-2'"
-        exit 1
-    fi
-
+    # first run help if argument is blank or help flag called
+    help
+    # then check if cdparanoia, flac installed
     check_prerequisites
+
 
     argument=$(grep -i "$1" csv/music.csv)
     if [ -z "$argument" ]; then
