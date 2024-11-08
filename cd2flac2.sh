@@ -75,32 +75,6 @@ sanitize_name() {
     echo "$name" | sed 's/^[.]*//'
 }
 
-# Function to select album
-select_album() {
-    matches="$1"
-    if [ -z "$matches" ]; then
-        echo "invalid selection. exiting."
-        exit 1
-    elif [ $(echo "$matches" | wc -l) -eq 1 ]; then
-        echo "$matches" | nl
-        echo -n "confirm [y/n]? "
-        read -r confirm
-        if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-            echo "cancelled"
-            exit 1
-        fi
-        echo "$matches"
-    else
-        echo "$matches" | nl
-        echo -n "select 1-$(echo "$matches" | nl | wc -l): "
-        read -r selection
-        if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $(echo "$matches" | wc -l) ]]; then
-            echo "Invalid selection. Exiting."
-            exit 1
-        fi
-        echo "$(echo "$matches" | sed -n "${selection}p")"
-    fi
-}
 
 # Function to rip CD
 rip_cd() {
@@ -117,7 +91,6 @@ rip_cd() {
 main() {
     help "$1" # run help, exit if argument is blank or help flags called
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
-#    confirm_match "$1" # verify argument is found in csv database
     get_matches "$1" # return a list of formatted matches
     choose_album
 #    echo "$HITS"
