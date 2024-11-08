@@ -130,20 +130,7 @@ main() {
     echo "$YEAR"
     echo "$ATTRIBUTES"
     
-#    echo "$HITS"
-#    check_cd_inserted # check if cd is inserted into cd player 
-#    if [[ $? -eq 0 ]]; then
-#        # if CD inserted, 
-#        # 
-#        echo "CD is inserted. Starting to rip..."
-#    fi
-#    
-#    matches=$(get_matches "$argument")
-#    selected_line=$(select_album "$matches")
-#
-#    # Parse values
-#    ALBUM_ARTIST=$(echo "$selected_line" | awk -F' - ' '{print $1}')
-#    ALBUM_YEAR_ATTR=$(echo "$selected_line" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
+
 #
 #    # Sanitize album artist and album name to remove leading periods
 #    SANITIZED_ALBUM_ARTIST=$(sanitize_name "$ALBUM_ARTIST")
