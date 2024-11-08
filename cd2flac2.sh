@@ -93,6 +93,7 @@ function get_albumyearattr() {
 # Function to check CD detection
 function check_cd_inserted() {
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1'
+    echo $?
 }
 
 # Function to sanitize album and artist names (remove leading periods)
