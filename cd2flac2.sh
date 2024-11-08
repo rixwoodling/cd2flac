@@ -40,6 +40,29 @@ function get_matches() {
     fi     
 }
 
+# Function to select album
+function choose_album() {
+    if [ $(echo "$HITS" | wc -l) -eq 1 ]; then
+        echo "$HITS" | nl
+        echo -n "confirm [y/n]? "
+        read -r CONFIRM
+        if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
+            echo "cancelled"
+            exit 1
+        fi
+        echo "$HITS"
+    else
+        echo "$HITS" | nl
+        echo -n "select 1-$(echo "$HITS" | nl | wc -l): "
+        read -r selection
+        if ! [[ "$SELECTION" =~ ^[0-9]+$ ]] || [ "$SELECTION" -lt 1 ] || [ "$SELECTION" -gt $(echo "$HITS" | wc -l) ]]; then
+            echo "Invalid selection. Exiting."
+            exit 1
+        fi
+        echo "$(echo "$HITS" | sed -n "${SELECTION}p")"
+    fi
+}
+
 
 # Function to check CD detection
 function check_cd_inserted() {
@@ -51,7 +74,6 @@ sanitize_name() {
     local name="$1"
     echo "$name" | sed 's/^[.]*//'
 }
-
 
 # Function to select album
 select_album() {
@@ -97,6 +119,7 @@ main() {
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
 #    confirm_match "$1" # verify argument is found in csv database
     get_matches "$1" # return a list of formatted matches
+    choose_album
     echo "$HITS"
 #    check_cd_inserted # check if cd is inserted into cd player 
 #    if [[ $? -eq 0 ]]; then
