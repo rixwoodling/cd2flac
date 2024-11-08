@@ -47,6 +47,8 @@ function get_matches() {
     if [ -z "$HITS" ]; then
         echo "no matches found for '$1' in csv/music.csv"
         exit 1
+    else
+        return "$HITS"
     fi     
 }
 
