@@ -72,7 +72,7 @@ function get_albumartist() {
     export ALBUM_ARTIST
 }
 
-function get_ALBUM() {
+function get_album() {
     ALBUM=$( echo "$MATCH" | rev )
     export ALBUM
 }
