@@ -101,8 +101,8 @@ rip_cd() {
 
 # Main function
 main() {
-    help # run help, exit if argument is blank or help flags called
-    if [[ $? -eq 1 ]]; then exit 1; done
+    # run help, exit if argument is blank or help flags called
+    help ; if [[ $? -eq 1 ]]; then exit 1; fi
     
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     confirm_match # verify argument is found in csv database
