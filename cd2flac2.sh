@@ -10,7 +10,7 @@ function help() {
 }
 
 # Function to check prerequisites
-check_prerequisites() {
+function check_prerequisites() {
     if ! command -v cdparanoia &> /dev/null; then
         echo "cdparanoia is not installed:"
         echo "sudo apt install cdparanoia"
@@ -50,7 +50,9 @@ function choose_album() {
             echo "invalid selection. cancelled. :("
             exit 1
         fi
-        echo "$HITS"
+        #echo "$HITS"
+        MATCH="$HITS"
+        export MATCH
     else
         echo "$HITS" | nl
         echo -n "select 1-$(echo "$HITS" | nl | wc -l): "
@@ -59,7 +61,9 @@ function choose_album() {
             echo "invalid selection. exiting. :("
             exit 1
         fi
-        echo "$(echo "$HITS" | sed -n "${SELECTION}p")"
+        #echo "$(echo "$HITS" | sed -n "${SELECTION}p")"
+        MATCH="$(echo "$HITS" | sed -n "${SELECTION}p")"
+        export MATCH
     fi
 }
 
@@ -77,7 +81,7 @@ sanitize_name() {
 
 
 # Function to rip CD
-rip_cd() {
+function rip_cd() {
     local path="$1"
     echo "Start ripping..."
     pushd "$path" > /dev/null
