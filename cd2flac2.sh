@@ -77,6 +77,11 @@ function get_album() {
     export ALBUM
 }
 
+function get_year() {
+    YEAR=$(echo "$MATCH" | rev | sed 's/.*)//' | sed 's/(.*//' | rev)
+    export YEAR
+}
+
 function get_albumyearattr() {
     ALBUM_YEAR_ATTR=$(echo "$MATCH" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
     export ALBUM_YEAR_ATTR
@@ -114,6 +119,7 @@ main() {
     get_albumartist
     get_album
     get_albumyearattr
+    get_year
     
     echo "$MATCH"
     echo "$ALBUM_ARTIST"
