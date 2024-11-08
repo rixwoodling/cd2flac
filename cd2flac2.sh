@@ -34,6 +34,8 @@ function confirm_match() {
     if [ -z "$argument" ]; then
         echo "no matches found for '$1' in csv/music.csv"
         exit 1
+    else
+        return "$HITS"
     fi
 }
 
