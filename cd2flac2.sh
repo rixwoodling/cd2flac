@@ -107,6 +107,7 @@ main() {
     get_matches "$1" # return a list of formatted matches
     choose_album
     get_albumartist
+    get_albumyearattr
     
     echo "$MATCH"
     echo "$ALBUM_ARTIST"
