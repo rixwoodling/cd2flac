@@ -13,6 +13,7 @@ function help() {
 check_prerequisites() {
     if ! command -v cdparanoia &> /dev/null; then
         echo "cdparanoia is not installed."
+        echo "install with --> sudo apt install cdparanoia"
         exit 1
     fi
     if ! command -v flac &> /dev/null; then
@@ -100,9 +101,7 @@ rip_cd() {
 
 # Main function
 main() {
-    # run help, exit if argument is blank or help flags called
-    help $1
-    
+    help $1 # run help, exit if argument is blank or help flags called
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     confirm_match # verify argument is found in csv database
     get_matches # return a list of formatted matches
