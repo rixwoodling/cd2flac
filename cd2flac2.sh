@@ -97,11 +97,15 @@ function check_cd_inserted() {
 }
 
 # Function to sanitize album and artist names (remove leading periods)
-sanitize_name() {
+function sanitize_name() {
     local name="$1"
     echo "$name" | sed 's/^[.]*//'
 }
 
+function filtered_albumartist() {
+    FILTERED_ALBUMARTIST=(echo $ALBUMARTIST)
+    export FILTERED_ALBUMARTIST
+}
 
 # Function to rip CD
 function rip_cd() {
@@ -124,6 +128,7 @@ main() {
     get_album
     get_year
     get_attributes
+    filtered_albumartist
     check_cd_inserted
     if check_cd_inserted; then
         echo "0"
@@ -136,6 +141,7 @@ main() {
     echo "$ALBUM"
     echo "$YEAR"
     echo "$ATTRIBUTES"
+    echo "$FILTERED_ALBUMARTIST"
     
 
 #
