@@ -125,6 +125,11 @@ main() {
     get_year
     get_attributes
     check_cd_inserted
+    if check_cd_inserted; then
+        echo "0"
+    else
+        echo "1"
+    fi    
     
     echo "$MATCH"
     echo "$ALBUM_ARTIST"
