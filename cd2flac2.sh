@@ -103,8 +103,7 @@ function sanitize_name() {
 }
 
 function filtered_albumartist() {
-    FILTERED_ALBUM_ARTIST=(echo "$ALBUM_ARTIST")
-    export FILTERED_ALBUM_ARTIST
+    FILTERED_ALBUM_ARTIST="$ALBUM_ARTIST"
 }
 
 # Function to rip CD
@@ -128,7 +127,7 @@ main() {
     get_album
     get_year
     get_attributes
-    filtered_albumartist "$ALBUM_ARTIST"
+    filtered_albumartist
     check_cd_inserted
     if check_cd_inserted; then
         echo "0"
