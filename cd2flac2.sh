@@ -101,7 +101,7 @@ function create_flac_directory() {
     FILTERED_ALBUM_ARTIST=$(sanitize_directory_name "$ALBUM_ARTIST")
     FILTERED_ALBUM=$(sanitize_directory_name "$ALBUM")
     # Construct the full directory path, handling optional attributes
-    if [[ -n "$ATTRIBUTES" ]]; then
+    if [ ! -z "$ATTRIBUTES" ]; then
         OUTPUT_PATH="flac/$FILTERED_ALBUM_ARTIST/$FILTERED_ALBUM ($YEAR) [$ATTRIBUTES]"
     else
         OUTPUT_PATH="flac/$FILTERED_ALBUM_ARTIST/$FILTERED_ALBUM ($YEAR)"
