@@ -103,7 +103,7 @@ function sanitize_name() {
 }
 
 function filtered_albumartist() {
-    FILTERED_ALBUM_ARTIST=(echo "$ALBUM_ARTIST" | sed 's/^[.]*//')
+    FILTERED_ALBUM_ARTIST=$(echo "$ALBUM_ARTIST" | sed 's/^[.]*//')
 }
 
 # Function to rip CD
