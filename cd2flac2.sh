@@ -91,8 +91,22 @@ function check_cd_inserted() {
     return $?
 }
 
-function filtered_albumartist() {
-    FILTERED_ALBUM_ARTIST=$(echo "$ALBUM_ARTIST" | sed 's/^[.]*//')
+function sanitize_directory_name() {
+    echo "$1" | sed -e 's/^[.]*//' -e 's/^The //'
+}
+
+# Function to create flac directory and sanitized album artist subdirectory
+function create_flac_directory() {
+    # Sanitize album artist and album names
+    FILTERED_ALBUM_ARTIST=$(sanitize_directory_name "$ALBUMARTIST")
+    FILTERED_ALBUM=$(sanitize_directory_name "$ALBUM")
+    # Construct the full directory path, handling optional attributes
+    if [[ -n "$ATTRIBUTES" ]]; then
+        OUTPUT_PATH="flac/$FILTERED_ALBUM_ARTIST/$FILTERED_ALBUM ($YEAR) [$ATTRIBUTES]"
+    else
+        OUTPUT_PATH="flac/$FILTERED_ALBUM_ARTIST/$FILTERED_ALBUM ($YEAR)"
+    fi
+
 }
 
 # Function to rip CD
@@ -130,6 +144,7 @@ main() {
     echo "$YEAR"
     echo "$ATTRIBUTES"
     echo "$FILTERED_ALBUM_ARTIST"
+    echo "$OUTPUT_PATH"
     
 
 #
