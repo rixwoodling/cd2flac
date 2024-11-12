@@ -128,7 +128,7 @@ main() {
     get_album
     get_year
     get_attributes
-    filtered_albumartist
+    filtered_albumartist "$ALBUMARTIST"
     check_cd_inserted
     if check_cd_inserted; then
         echo "0"
