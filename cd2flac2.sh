@@ -67,27 +67,27 @@ function choose_album() {
 
 function get_albumartist() {
     ALBUM_ARTIST=$(echo "$MATCH" | awk -F' - ' '{print $1}')
-    export ALBUM_ARTIST
+    #export ALBUM_ARTIST
 }
 
 function get_album() {
     ALBUM=$(echo "$MATCH" | rev | sed 's/.*( //' | rev | sed 's/.* - //')
-    export ALBUM
+    #export ALBUM
 }
 
 function get_year() {
     YEAR=$(echo "$MATCH" | rev | sed 's/.*)//' | sed 's/(.*//' | rev)
-    export YEAR
+    #export YEAR
 }
 
 function get_attributes() {
     ATTRIBUTES=$(echo "$MATCH" | rev | sed 's/).*//' | rev | sed 's/.*\[//' | sed 's/\].*//')
-    export ATTRIBUTES
+    #export ATTRIBUTES
 }
 
 function get_albumyearattr() {
     ALBUM_YEAR_ATTR=$(echo "$MATCH" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
-    export ALBUM_YEAR_ATTR
+    #export ALBUM_YEAR_ATTR
 }
 
 # Function to check CD detection
