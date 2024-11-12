@@ -92,7 +92,7 @@ function check_cd_inserted() {
 }
 
 function sanitize_directory_name() {
-    echo "$1" | sed -e 's/^[.]*//' -e 's/^The //'
+    echo "$1" | sed 's/^[.]*//'
 }
 
 # Function to create flac directory and sanitized album artist subdirectory
