@@ -130,7 +130,7 @@ main() {
     get_album
     get_year
     get_attributes
-    filtered_albumartist
+    create_flac_directory
     check_cd_inserted
     if check_cd_inserted; then
         echo "0"
