@@ -96,7 +96,7 @@ function sanitize_directory_name() {
 }
 
 # Function to create flac directory and sanitized album artist subdirectory
-function create_flac_directory() {
+function define_output_directory() {
     # Sanitize album artist and album names
     FILTERED_ALBUM_ARTIST=$(sanitize_directory_name "$ALBUM_ARTIST")
     FILTERED_ALBUM=$(sanitize_directory_name "$ALBUM")
@@ -111,9 +111,8 @@ function create_flac_directory() {
 
 # Function to rip CD
 function rip_cd() {
-    local path="$1"
-    echo "Start ripping..."
-    pushd "$path" > /dev/null
+    echo "Start Ripping... ;)"
+    pushd "$OUTPUT_PATH" > /dev/null
     cdparanoia --output-aiff --abort-on-skip --batch --log-summary && \
     cdparanoia --verbose --search-for-drive --query 2>&1 | tee -a cdparanoia.log && \
     flac *.aiff --verify --best --delete-input-file 2>&1 | tee -a flac.log
@@ -130,10 +129,14 @@ main() {
     get_album
     get_year
     get_attributes
-    create_flac_directory
+    define_output_directory
     check_cd_inserted
     if check_cd_inserted; then
         echo "0"
+        #create_output_path
+        #check_path_for_flac
+        #if ! check_path_for_flac; then
+            #rip_cd()
     else
         echo "1"
     fi    
