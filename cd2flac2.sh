@@ -98,7 +98,7 @@ function sanitize_directory_name() {
 # Function to create flac directory and sanitized album artist subdirectory
 function create_flac_directory() {
     # Sanitize album artist and album names
-    FILTERED_ALBUM_ARTIST=$(sanitize_directory_name "$ALBUMARTIST")
+    FILTERED_ALBUM_ARTIST=$(sanitize_directory_name "$ALBUM_ARTIST")
     FILTERED_ALBUM=$(sanitize_directory_name "$ALBUM")
     # Construct the full directory path, handling optional attributes
     if [[ -n "$ATTRIBUTES" ]]; then
