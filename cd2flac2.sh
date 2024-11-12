@@ -78,7 +78,7 @@ function get_year() {
 }
 
 function get_attributes() {
-    ATTRIBUTES=$(echo "$MATCH" | rev | sed 's/).*//' | rev | sed 's/.*\[//' | sed 's/\].*//')
+    ATTRIBUTES=$(echo "$MATCH" | rev | sed 's/).*//' | rev | sed 's/.*\[//' | sed 's/\].*//' | sed 's/[[:space:]]\+$//')
 }
 
 function get_albumyearattr() {
