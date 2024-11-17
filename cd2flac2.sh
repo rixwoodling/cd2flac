@@ -154,10 +154,18 @@ function rip_cd() {
 }
 
 function debug() {
-    echo "CD inserted: "$check_cd_inserted
+    if [ $check_cd_inserted -eq 0 ]; then
+    echo "CD inserted: yes"
+    else
+    echo "CD inserted: no"
+    fi
     echo "CD track total: "$tracktotal_in_cd
     echo "CSV track total: "$tracktotal_in_csv
-    echo "CSV vs CD track total boolean: "$csv_match_boolean
+    if [ $csv_match_boolean -eq 0 ]; then
+    echo "CSV vs CD track total? yes"
+    else
+    echo "CSV vs CD track total? no"
+    fi 
     echo "flac files found in output dir: "$flac_count
     echo "$ALBUM_ARTIST"
     echo "$ALBUM"
