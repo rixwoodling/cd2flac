@@ -155,9 +155,9 @@ function rip_cd() {
 
 function debug() {
     if [ $check_cd_inserted -eq 0 ]; then
-    echo "CD inserted: yes"
+    echo "CD inserted:\tyes"
     else
-    echo "CD inserted: no"
+    echo "CD inserted:\tno"
     fi
     echo "CD track total: "$tracktotal_in_cd
     echo "CSV track total: "$tracktotal_in_csv
