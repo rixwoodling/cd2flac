@@ -9,20 +9,6 @@ function help() {
     fi
 }
 
-function debug() {
-    echo "CD inserted: "$check_cd_inserted
-    echo "CD track total: "$tracktotal_in_cd
-    echo "CSV track total: "$tracktotal_in_csv
-    echo "CSV vs CD track total boolean: "$csv_match_boolean
-    echo "flac files found in output dir: "$flac_    #echo "$MATCH"
-    echo "$ALBUM_ARTIST"
-    echo "$ALBUM"
-    echo "$YEAR"
-    echo "$ATTRIBUTES"
-    echo "$FILTERED_ALBUM_ARTIST"
-    echo "$OUTPUT_PATH"
-}
-
 # Function to check prerequisites
 function check_prerequisites() {
     if ! command -v cdparanoia &> /dev/null; then
@@ -172,7 +158,7 @@ function debug() {
     echo "CD track total: "$tracktotal_in_cd
     echo "CSV track total: "$tracktotal_in_csv
     echo "CSV vs CD track total boolean: "$csv_match_boolean
-    echo "flac files found in output dir: "$flac_    #echo "$MATCH"
+    echo "flac files found in output dir: "$flac_count
     echo "$ALBUM_ARTIST"
     echo "$ALBUM"
     echo "$YEAR"
