@@ -110,27 +110,35 @@ function define_output_directory() {
 }
 
 function final_checks() {
+    # check if cd inserted, return value 0 or 1
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
     check_cd_inserted=$?
+
+    # if cd inserted, return track total, otherwise return 0
     if [ $check_cd_inserted -eq 0 ]; then
         tracktotal_in_cd=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
     else
         tracktotal_in_cd=0
     fi
-    tracktotal_in_csv=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
 
+    # return track total matching non-filtered results ( should be > 0 )
+    tracktotal_in_csv=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
+
+    # if track total found in csv matches cd track total, then return match value 0, otherwise return 1
     if [ $tracktotal_in_csv -eq $tracktotal_in_cd ]; then
         csv_match_boolean=0
     else
-        csv_mat h_boolean=1
-    
-    flac_count=$(ls "$OUTPUT_PATH" | grep ".flac" | wc -l)
+        csv_match_boolean=1
+    fi
 
-    echo $check_cd_inserted
-    echo $tracktotal_in_cd
-    echo $tracktotal_in_csv
-    echo $csv_match_boolean
-    echo $flac_count
+    # return flac count found in output path
+    flac_count=$(ls "$OUTPUT_PATH" 2>/dev/null | grep ".flac" | wc -l)
+
+    echo "CD inserted: "$check_cd_inserted
+    echo "CD track total: "$tracktotal_in_cd
+    echo "CSV track total: "$tracktotal_in_csv
+    echo "CSV vs CD track total boolean: "$csv_match_boolean
+    echo "flac files found in output dir: "$flac_count
     
     # if flac files not in output_path, CD inserted, start ripping
     #if [ cd_status -eq 0 ]; then
