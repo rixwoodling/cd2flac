@@ -187,6 +187,11 @@ main() {
     get_attributes
     define_output_directory
     final_checks
+    if [ $flac_count -eq 0 ]; then
+        echo "directory is empty"
+    else
+        echo "directory is not empty"
+    fi
     debug
     #check_cd_inserted
     #if check_cd_inserted; then
