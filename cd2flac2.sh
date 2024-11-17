@@ -109,6 +109,38 @@ function define_output_directory() {
 
 }
 
+function final_checks() {
+    udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
+    check_cd_inserted=$?
+    if [ $check_cd_inserted -eq 0 ]; then
+        tracktotal_in_cd=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
+    else
+        tracktotal_in_cd=0
+    fi
+    tracktotal_in_csv=$(grep "$ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
+
+    if [ $tracktotal_in_csv -eq $tracktotal_in_cd ]; then
+        csv_match_boolean=0
+    else
+        csv_mat h_boolean=1
+    
+    flac_count=$(ls "$OUTPUT_PATH" | grep ".flac" | wc -l)
+
+    echo $check_cd_inserted
+    echo $tracktotal_in_cd
+    echo $tracktotal_in_csv
+    echo $csv_match_boolean
+    echo $flac_count
+    
+    # if flac files not in output_path, CD inserted, start ripping
+    #if [ cd_status -eq 0 ]; then
+    # if flac files not in output_path, and CD not inserted, error with nothing to do
+    # if flac files in output_path, and CD not inserted, and flac files match csv, rewrite metadata
+    # if flac files in output_pathy, and CD not inserted, and flac files don't match csv, error with mismatch
+    # if flac files in output_path, and CD inserted, and CD total matches csv, error with files exist
+    # if flac files in output_path, and CD inserted, and CD total doesn't match csv, error with CD/csv mismatch
+}
+
 # Function to rip CD
 function rip_cd() {
     echo "Start Ripping... ;)"
@@ -130,24 +162,25 @@ main() {
     get_year
     get_attributes
     define_output_directory
-    check_cd_inserted
-    if check_cd_inserted; then
-        echo "0"
+    final_checks
+    #check_cd_inserted
+    #if check_cd_inserted; then
+    #    echo "0"
         #create_output_path
         #check_path_for_flac
         #if ! check_path_for_flac; then
             #rip_cd()
-    else
-        echo "1"
-    fi    
+    #else
+    #    echo "1"
+    #fi    
     
-    echo "$MATCH"
-    echo "$ALBUM_ARTIST"
-    echo "$ALBUM"
-    echo "$YEAR"
-    echo "$ATTRIBUTES"
-    echo "$FILTERED_ALBUM_ARTIST"
-    echo "$OUTPUT_PATH"
+    #echo "$MATCH"
+    #echo "$ALBUM_ARTIST"
+    #echo "$ALBUM"
+    #echo "$YEAR"
+    #echo "$ATTRIBUTES"
+    #echo "$FILTERED_ALBUM_ARTIST"
+    #echo "$OUTPUT_PATH"
     
 
 #
