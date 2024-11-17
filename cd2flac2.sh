@@ -1,12 +1,26 @@
 #!/bin/bash
 
 function help() {
-  if [[ -z "$1" || "$1" == "-h" || "$1" == "--help" ]]; then 
-  echo "HOW TO USE"
-  echo "sh cd2flac.sh beatles"
-  echo "sh cd2flac.sh 1999"
-  exit 1
-  fi
+    if [[ -z "$1" || "$1" == "-h" || "$1" == "--help" ]]; then 
+    echo "HOW TO USE"
+    echo "sh cd2flac.sh beatles"
+    echo "sh cd2flac.sh 1999"
+    exit 1
+    fi
+}
+
+function debug() {
+    echo "CD inserted: "$check_cd_inserted
+    echo "CD track total: "$tracktotal_in_cd
+    echo "CSV track total: "$tracktotal_in_csv
+    echo "CSV vs CD track total boolean: "$csv_match_boolean
+    echo "flac files found in output dir: "$flac_    #echo "$MATCH"
+    echo "$ALBUM_ARTIST"
+    echo "$ALBUM"
+    echo "$YEAR"
+    echo "$ATTRIBUTES"
+    echo "$FILTERED_ALBUM_ARTIST"
+    echo "$OUTPUT_PATH"
 }
 
 # Function to check prerequisites
@@ -134,12 +148,6 @@ function final_checks() {
     # return flac count found in output path
     flac_count=$(ls "$OUTPUT_PATH" 2>/dev/null | grep ".flac" | wc -l)
 
-    echo "CD inserted: "$check_cd_inserted
-    echo "CD track total: "$tracktotal_in_cd
-    echo "CSV track total: "$tracktotal_in_csv
-    echo "CSV vs CD track total boolean: "$csv_match_boolean
-    echo "flac files found in output dir: "$flac_count
-    
     # if flac files not in output_path, CD inserted, start ripping
     #if [ cd_status -eq 0 ]; then
     # if flac files not in output_path, and CD not inserted, error with nothing to do
@@ -159,6 +167,20 @@ function rip_cd() {
     popd > /dev/null
 }
 
+function debug() {
+    echo "CD inserted: "$check_cd_inserted
+    echo "CD track total: "$tracktotal_in_cd
+    echo "CSV track total: "$tracktotal_in_csv
+    echo "CSV vs CD track total boolean: "$csv_match_boolean
+    echo "flac files found in output dir: "$flac_    #echo "$MATCH"
+    echo "$ALBUM_ARTIST"
+    echo "$ALBUM"
+    echo "$YEAR"
+    echo "$ATTRIBUTES"
+    echo "$FILTERED_ALBUM_ARTIST"
+    echo "$OUTPUT_PATH"
+}
+
 # Main function
 main() {
     help "$1" # run help, exit if argument is blank or help flags called
@@ -171,6 +193,7 @@ main() {
     get_attributes
     define_output_directory
     final_checks
+    debug
     #check_cd_inserted
     #if check_cd_inserted; then
     #    echo "0"
@@ -181,14 +204,6 @@ main() {
     #else
     #    echo "1"
     #fi    
-    
-    #echo "$MATCH"
-    #echo "$ALBUM_ARTIST"
-    #echo "$ALBUM"
-    #echo "$YEAR"
-    #echo "$ATTRIBUTES"
-    #echo "$FILTERED_ALBUM_ARTIST"
-    #echo "$OUTPUT_PATH"
     
 
 #
