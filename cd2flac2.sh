@@ -85,6 +85,10 @@ function get_albumyearattr() {
     ALBUM_YEAR_ATTR=$(echo "$MATCH" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
 }
 
+function get_cd_total() {
+    CD_TOTAL=$(cat csv/music.csv | grep "$ALBUM_ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $7}' | uniq | wc -l)
+}    
+
 # Function to check CD detection
 function check_cd_inserted() {
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
@@ -171,6 +175,7 @@ function debug() {
     echo "$ALBUM"
     echo "$YEAR"
     echo "$ATTRIBUTES"
+    echo "$CD_TOTAL"
     echo "$FILTERED_ALBUM_ARTIST"
     echo "$OUTPUT_PATH"
 }
@@ -185,6 +190,7 @@ main() {
     get_album
     get_year
     get_attributes
+    get_cd_total
     define_output_directory
     final_checks
     if [ $flac_count -eq 0 ]; then
