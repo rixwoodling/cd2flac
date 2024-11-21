@@ -70,7 +70,7 @@ function get_albumartist() {
 }
 
 function get_album() {
-    ALBUM=$(echo "$MATCH" | sed 's/^[^ ]* - //' | rev | sed 's/.*( //' | rev)
+    ALBUM=$(echo "$MATCH" | sed 's/^.* - //' | rev | sed 's/.*( //' | rev)
 }
 
 function get_year() {
