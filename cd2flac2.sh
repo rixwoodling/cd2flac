@@ -204,6 +204,7 @@ function debug() {
     echo "$FILTERED_ALBUM_ARTIST"
     echo "$OUTPUT_PATH"
     echo "$DISC_NUMBER"
+    echo "$TRACK_TOTAL"
 }
 
 # Main function
