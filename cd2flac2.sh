@@ -196,12 +196,12 @@ function debug() {
     else
     echo "CSV vs CD track total? no"
     fi 
-    echo "flac files found in output dir: "$flac_count
-    echo "$ALBUM_ARTIST"
-    echo "$ALBUM"
-    echo "$YEAR"
-    echo "$ATTRIBUTES"
-    echo "$DISC_TOTAL"
+    printf "Flac files in Output Path:\t$flac_count\n"
+    printf "Album Artist:\t\t$ALBUM_ARTIST\n"
+    printf "Album:\t\t$ALBUM\n"
+    printf "Year:\t\t$YEAR\n"
+    printf "Attributes:\t\t$ATTRIBUTES\n"
+    printf "Disc Total:\t\t$DISC_TOTAL\n"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "Disc Number:\t\t$DISC_NUMBER\n"
