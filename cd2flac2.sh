@@ -44,7 +44,7 @@ function choose_album() {
         echo "$HITS" | nl
         read -p "confirm [Y/n]? " CONFIRM
         CONFIRM=${CONFIRM:-Y}  # Default to 'Y' if Enter is pressed
-        if [[ "$CONFIRM" =~ ^[Yy]$ ]]; then
+        if [[ "$CONFIRM" =~ ^[Yy1]$ ]]; then
             MATCH="$HITS"
         else
             echo "Invalid selection. Cancelled. :("
