@@ -150,12 +150,16 @@ function final_checks() {
 
 function select_which_cd() {
     if [ $DISC_TOTAL -gt 1 ]; then
-        current_disc_total=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $3" - "$5" ("$6") "$13" CD"$7}' | uniq | nl)
-        echo "$current_disc_total"
-        #read -r DISC_SELECTION
-        #DISC_NUMBER=0
-    #else
-        #DISC_NUMBER=1
+        disc_list=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $3" - "$5" ("$6") "$13" CD"$7}' | uniq | nl)
+        echo "$disc_list"
+        read -r DISC_SELECT
+        if ! [[ "$DISC_SELECT" =~ ^[0-9]+$ ]] || [[ "$DISC_SELECT" -lt 1 ]] || [[ "$DISC_SELECT" -gt $(echo "$disc_list" | wc -l) ]]; then
+            echo "invalid selection. exiting. :("
+            exit 1
+        fi
+        DISC_NUMBER="$(echo "$disc_list" | sed -n "${DISC_SELECT}p")"
+    else
+        DISC_NUMBER=1
     fi    
 }
 
@@ -190,6 +194,7 @@ function debug() {
     echo "$DISC_TOTAL"
     echo "$FILTERED_ALBUM_ARTIST"
     echo "$OUTPUT_PATH"
+    echo "$DISC_NUMBER"
 }
 
 # Main function
