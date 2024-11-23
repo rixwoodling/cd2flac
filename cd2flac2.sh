@@ -198,8 +198,8 @@ function debug() {
     fi 
     printf "Flac files in Output Path:\t$flac_count\n"
     printf "Album Artist:\t\t$ALBUM_ARTIST\n"
-    printf "Album:\t\t$ALBUM\n"
-    printf "Year:\t\t$YEAR\n"
+    printf "Album:\t\t\t$ALBUM\n"
+    printf "Year:\t\t\t$YEAR\n"
     printf "Attributes:\t\t$ATTRIBUTES\n"
     printf "Disc Total:\t\t$DISC_TOTAL\n"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
