@@ -35,8 +35,6 @@ function get_matches() {
     if [ -z "$HITS" ]; then
         echo "no matches found for '$1' in csv/music.csv"
         exit 1
-    else
-        export HITS
     fi     
 }
 
@@ -51,7 +49,6 @@ function choose_album() {
             exit 1
         fi
         MATCH="$HITS"
-        export MATCH
     else
         echo "$HITS" | nl
         echo -n "select 1-$(echo "$HITS" | nl | wc -l): "
@@ -61,7 +58,6 @@ function choose_album() {
             exit 1
         fi
         MATCH="$(echo "$HITS" | sed -n "${SELECTION}p")"
-        export MATCH
     fi
 }
 
@@ -85,14 +81,18 @@ function get_albumyearattr() {
     ALBUM_YEAR_ATTR=$(echo "$MATCH" | awk -F' - ' '{print $2}' | sed 's/[[:space:]]\+$//')
 }
 
-function get_cd_total() {
-    CD_TOTAL=$(cat csv/music.csv | grep "$ALBUM_ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $7}' | uniq | wc -l)
+function get_disc_total() {
+    DISC_TOTAL=$(cat csv/music.csv | grep "$ALBUM_ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $7}' | uniq | wc -l)
 }    
 
 # Function to check CD detection
 function check_cd_inserted() {
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
     return $?
+}
+
+function cd_tracktotal() {
+    CD_TRACKTOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
 }
 
 function sanitize_directory_name() {
@@ -120,9 +120,9 @@ function final_checks() {
 
     # if cd inserted, return track total, otherwise return 0
     if [ $check_cd_inserted -eq 0 ]; then
-        tracktotal_in_cd=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
+        CD_TRACKTOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
     else
-        tracktotal_in_cd=0
+        CD_TRACKTOTAL=0
     fi
 
     # return track total matching non-filtered results ( should be > 0 )
@@ -147,6 +147,17 @@ function final_checks() {
     # if flac files in output_path, and CD inserted, and CD total doesn't match csv, error with CD/csv mismatch
 }
 
+function select_which_cd() {
+    if [ $DISC_TOTAL -gt 1 ]; then
+        current_disc_total=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $3" - "$5" ("$6") "$13" CD"$7}' | uniq | nl)
+        echo "$current_disc_total"
+        #read -r DISC_SELECTION
+        #DISC_NUMBER=0
+    #else
+        #DISC_NUMBER=1
+    fi    
+}
+
 # Function to rip CD
 function rip_cd() {
     echo "Start Ripping... ;)"
@@ -163,7 +174,7 @@ function debug() {
     else
     echo "CD inserted: no"
     fi
-    echo "CD track total: "$tracktotal_in_cd
+    echo "CD track total: "$CD_TRACKTOTAL
     echo "CSV track total: "$tracktotal_in_csv
     if [ $csv_match_boolean -eq 0 ]; then
     echo "CSV vs CD track total? yes"
@@ -175,7 +186,7 @@ function debug() {
     echo "$ALBUM"
     echo "$YEAR"
     echo "$ATTRIBUTES"
-    echo "$CD_TOTAL"
+    echo "$DISC_TOTAL"
     echo "$FILTERED_ALBUM_ARTIST"
     echo "$OUTPUT_PATH"
 }
@@ -190,9 +201,10 @@ main() {
     get_album
     get_year
     get_attributes
-    get_cd_total
+    get_disc_total
     define_output_directory
     final_checks
+    select_which_cd
     if [ $flac_count -eq 0 ]; then
         echo "directory is empty"
     else
