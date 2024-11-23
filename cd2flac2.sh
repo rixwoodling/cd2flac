@@ -129,7 +129,7 @@ function final_checks() {
     tracktotal_in_csv=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | wc -l)
 
     # if track total found in csv matches cd track total, then return match value 0, otherwise return 1
-    if [ $tracktotal_in_csv -eq $tracktotal_in_cd ]; then
+    if [ $tracktotal_in_csv -eq $CD_TRACKTOTAL ]; then
         csv_match_boolean=0
     else
         csv_match_boolean=1
