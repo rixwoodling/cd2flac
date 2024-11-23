@@ -201,9 +201,9 @@ function debug() {
     echo "$YEAR"
     echo "$ATTRIBUTES"
     echo "$DISC_TOTAL"
-    echo "$FILTERED_ALBUM_ARTIST"
-    echo "$OUTPUT_PATH"
-    echo "$DISC_NUMBER"
+    printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
+    printf "File Path:\t$OUTPUT_PATH/\n"
+    printf "Disc Number:\t$DISC_NUMBER\n"
     printf "Track Total:\t$TRACK_TOTAL\n"
 }
 
