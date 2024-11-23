@@ -102,11 +102,15 @@ function get_disc_number() {
     fi    
 }
 
-function cd_tracktotal() {
-    CD_TRACKTOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
+function get_track_total() {
+    TRACK_TOTAL=$(cat csv/music.csv | grep "$ALBUM_ARTIST" | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $7}' | grep $DISC_NUMBER | wc -l)
 }
 
 # ---
+
+function cd_tracktotal() {
+    CD_TRACKTOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
+}
 
 # Function to check CD detection
 function check_cd_inserted() {
@@ -214,6 +218,7 @@ main() {
     get_attributes
     get_disc_total
     get_disc_number
+    get_track_total
     
     define_output_directory
     final_checks
