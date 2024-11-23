@@ -202,9 +202,9 @@ function debug() {
     echo "$ATTRIBUTES"
     echo "$DISC_TOTAL"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
-    printf "File Path:\t$OUTPUT_PATH/\n"
-    printf "Disc Number:\t$DISC_NUMBER\n"
-    printf "Track Total:\t$TRACK_TOTAL\n"
+    printf "File Path:\t\t$OUTPUT_PATH/\n"
+    printf "Disc Number:\t\t$DISC_NUMBER\n"
+    printf "Track Total:\t\t$TRACK_TOTAL\n"
 }
 
 # Main function
