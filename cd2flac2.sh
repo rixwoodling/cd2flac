@@ -204,7 +204,7 @@ function debug() {
     echo "$FILTERED_ALBUM_ARTIST"
     echo "$OUTPUT_PATH"
     echo "$DISC_NUMBER"
-    echo "$TRACK_TOTAL"
+    printf "Track Total:\t$TRACK_TOTAL\n"
 }
 
 # Main function
