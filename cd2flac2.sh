@@ -40,15 +40,17 @@ function get_matches() {
 
 # Function to select album
 function choose_album() {
-    if [ $(echo "$HITS" | wc -l) -eq 1 ]; then
-        echo "$HITS" | nl
-        echo -n "confirm [y/n]? "
-        read -r CONFIRM
-        if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
-            echo "invalid selection. cancelled. :("
-            exit 1
+        if [ $(echo "$HITS" | wc -l) -eq 1 ]; then
+            echo "$HITS" | nl
+            read -p "confirm [Y/n]? " CONFIRM
+            CONFIRM=${CONFIRM:-Y}  # Default to 'Y' if Enter is pressed
+            if [[ "$CONFIRM" =~ ^[Yy]$ ]]; then
+                MATCH="$HITS"
+            else
+                echo "Invalid selection. Cancelled. :("
+                exit 1
+            fi
         fi
-        MATCH="$HITS"
     else
         echo "$HITS" | nl
         echo -n "select 1-$(echo "$HITS" | nl | wc -l): "
