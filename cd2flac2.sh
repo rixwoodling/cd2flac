@@ -90,6 +90,7 @@ function get_disc_number() {
     if [ $DISC_TOTAL -gt 1 ]; then
         disc_list=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | awk -F',' '{print $3" - "$5" ("$6") "$13" CD"$7}' | uniq | nl)
         echo "$disc_list"
+        echo -n "Select disc: "
         read -r DISC_SELECT
         if ! [[ "$DISC_SELECT" =~ ^[0-9]+$ ]] || [[ "$DISC_SELECT" -lt 1 ]] || [[ "$DISC_SELECT" -gt $(echo "$disc_list" | wc -l) ]]; then
             echo "invalid selection. exiting. :("
