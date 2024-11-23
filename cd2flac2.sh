@@ -158,6 +158,7 @@ function select_which_cd() {
             exit 1
         fi
         DISC_NUMBER="$(echo "$disc_list" | sed -n "${DISC_SELECT}p")"
+        DISC_NUMBER=$DISC_SELECT
     else
         DISC_NUMBER=1
     fi    
@@ -194,7 +195,7 @@ function debug() {
     echo "$DISC_TOTAL"
     echo "$FILTERED_ALBUM_ARTIST"
     echo "$OUTPUT_PATH"
-    #echo "$DISC_NUMBER"
+    echo "$DISC_NUMBER"
 }
 
 # Main function
