@@ -138,7 +138,6 @@ function define_output_directory() {
     else
         OUTPUT_PATH="flac/$FILTERED_ALBUM_ARTIST/$FILTERED_ALBUM ($YEAR)"
     fi
-
 }
 
 function get_flac_total() {
