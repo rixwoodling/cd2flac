@@ -153,6 +153,10 @@ function get_flac_total() {
     FLAC_TOTAL=$(ls "$OUTPUT_PATH" 2>/dev/null | grep ".flac" | wc -l)
 }
 
+function detect_multiple_artists() {
+    ARTIST_TOTAL=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $4}' | wc -l)
+}
+
 function final_checks() {
     # check if cd inserted, return value 0 or 1
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
@@ -234,6 +238,8 @@ main() {
     define_output_directory    
     verify_output_path
     get_flac_total
+
+    detect_multiple_artists
     
     detect_cd
 
