@@ -185,18 +185,6 @@ function rip_cd() {
 
 function debug() {
     echo
-    if [ $check_cd_inserted -eq 0 ]; then
-    echo "CD inserted: yes"
-    else
-    echo "CD inserted: no"
-    fi
-    echo "CD track total: "$CD_TRACKTOTAL
-    echo "CSV track total: "$tracktotal_in_csv
-    if [ $csv_match_boolean -eq 0 ]; then
-    echo "CSV vs CD track total? yes"
-    else
-    echo "CSV vs CD track total? no"
-    fi 
     printf "Album Artist:\t\t$ALBUM_ARTIST\n"
     printf "Album:\t\t\t$ALBUM\n"
     printf "Year:\t\t\t$YEAR\n"
@@ -208,6 +196,18 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "Flac Total:\t\t$flac_count\n"
+    
+    if [ $check_cd_inserted -eq 0 ]; then
+    echo "CD inserted: yes"
+    else
+    echo "CD inserted: no"
+    fi
+    echo "CD track total: "$CD_TRACKTOTAL
+    if [ $csv_match_boolean -eq 0 ]; then
+    echo "CSV vs CD track total? yes"
+    else
+    echo "CSV vs CD track total? no"
+    fi 
 }
 
 # Main function
