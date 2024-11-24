@@ -202,12 +202,7 @@ function debug() {
     printf "Flac Total:\t\t$flac_count\n"
 
     printf "CD Detected:\t\t$CD_DETECTION\n"
-    if [ $check_cd_inserted -eq 0 ]; then
-    echo "CD inserted: yes"
-    else
-    echo "CD inserted: no"
-    fi
-    echo "CD track total: "$CD_TRACKTOTAL
+    printf "CD Track Total:\t\t$CD_TRACKTOTAL\n"
     if [ $csv_match_boolean -eq 0 ]; then
     echo "CSV vs CD track total? yes"
     else
