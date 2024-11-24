@@ -109,14 +109,17 @@ function get_track_total() {
 
 # ---
 
-function cd_tracktotal() {
-    CD_TRACKTOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
-}
-
 # Function to check CD detection
 function check_cd_inserted() {
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
-    return $?
+    if [ $? -eq 0 ]; then 
+        CD_DETECTION="Yes"
+    else
+        CD_DETECTION="No"
+}
+
+function cd_tracktotal() {
+    CD_TRACKTOTAL=$(cdparanoia -Q 2>&1 | awk '{print $1}' | grep "^[ 0-9]" | wc -l)
 }
 
 function sanitize_directory_name() {
@@ -196,7 +199,8 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "Flac Total:\t\t$flac_count\n"
-    
+
+    printf "CD Detected:\t\t$CD_DETECTION\n"
     if [ $check_cd_inserted -eq 0 ]; then
     echo "CD inserted: yes"
     else
