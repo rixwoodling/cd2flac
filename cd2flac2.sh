@@ -231,6 +231,7 @@ main() {
     get_disc_number
     get_track_total
     define_output_directory    
+    verify_output_path
     get_flac_total
     
     detect_cd
