@@ -209,7 +209,7 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
-    printf "File Path Exists:\t\t$OUTPUT_PATH_EXISTS\n"
+    printf "File Path Exists:\t$OUTPUT_PATH_EXISTS\n"
     printf "Flac Total:\t\t$FLAC_TOTAL\n"
     
     printf "CD Detected:\t\t$CD_DETECTION\n"
