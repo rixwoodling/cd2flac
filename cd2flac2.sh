@@ -116,6 +116,7 @@ function check_cd_inserted() {
         CD_DETECTION="Yes"
     else
         CD_DETECTION="No"
+    fi    
 }
 
 function cd_tracktotal() {
