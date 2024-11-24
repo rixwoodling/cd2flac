@@ -141,6 +141,11 @@ function define_output_directory() {
 
 }
 
+function get_flac_total() {
+    # return flac count found in output path
+    FLAC_TOTAL=$(ls "$OUTPUT_PATH" 2>/dev/null | grep ".flac" | wc -l)
+}
+
 function final_checks() {
     # check if cd inserted, return value 0 or 1
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
@@ -163,8 +168,6 @@ function final_checks() {
         csv_match_boolean=1
     fi
 
-    # return flac count found in output path
-    flac_count=$(ls "$OUTPUT_PATH" 2>/dev/null | grep ".flac" | wc -l)
 
     # if flac files not in output_path, CD inserted, start ripping
     #if [ cd_status -eq 0 ]; then
@@ -199,7 +202,7 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
-    printf "Flac Total:\t\t$flac_count\n"
+    printf "Flac Total:\t\t$FLAC_TOTAL\n"
 
     printf "CD Detected:\t\t$CD_DETECTION\n"
     printf "CD Track Total:\t\t$CD_TRACKTOTAL\n"
