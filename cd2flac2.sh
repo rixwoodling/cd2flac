@@ -140,6 +140,13 @@ function define_output_directory() {
     fi
 }
 
+function verify_output_path() {
+    if [ -d "$OUTPUT_PATH" ]; then
+        OUTPUT_PATH_EXISTS="Yes"
+    else
+        OUTPUT_PATH_EXISTS="No"
+}
+
 function get_flac_total() {
     # return flac count found in output path
     FLAC_TOTAL=$(ls "$OUTPUT_PATH" 2>/dev/null | grep ".flac" | wc -l)
@@ -201,6 +208,7 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
+    printf "File Path Exists:\t\t$OUTPUT_PATH_EXISTS\n"
     printf "Flac Total:\t\t$FLAC_TOTAL\n"
     
     printf "CD Detected:\t\t$CD_DETECTION\n"
