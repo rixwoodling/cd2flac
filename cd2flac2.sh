@@ -98,6 +98,7 @@ function get_disc_number() {
         fi
         DISC_NUMBER="$(echo "$disc_list" | sed -n "${DISC_SELECT}p")"
         DISC_NUMBER=$DISC_SELECT
+        echo
     else
         DISC_NUMBER=1
     fi    
