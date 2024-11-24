@@ -203,6 +203,7 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "Flac Total:\t\t$FLAC_TOTAL\n"
+    
     printf "CD Detected:\t\t$CD_DETECTION\n"
     printf "CD Track Total:\t\t$CD_TRACKTOTAL\n"
 }
@@ -213,6 +214,7 @@ main() {
     check_prerequisites # then check if csv databases exist, and cdparanoia, flac installed
     get_matches "$1" # return a list of formatted matches
     choose_album
+    
     get_albumartist
     get_album
     get_year
@@ -221,9 +223,11 @@ main() {
     get_disc_number
     get_track_total
     define_output_directory    
+    get_flac_total
+    
     detect_cd
 
-    #final_checks
+    final_checks
     
     #if [ $flac_count -eq 0 ]; then
     #    echo "directory is empty"
