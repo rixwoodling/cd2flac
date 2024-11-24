@@ -60,7 +60,6 @@ function choose_album() {
         fi
         MATCH="$(echo "$HITS" | sed -n "${SELECTION}p")"
     fi
-    echo
 }
 
 function get_albumartist() {
@@ -99,7 +98,6 @@ function get_disc_number() {
         fi
         DISC_NUMBER="$(echo "$disc_list" | sed -n "${DISC_SELECT}p")"
         DISC_NUMBER=$DISC_SELECT
-        echo
     else
         DISC_NUMBER=1
     fi    
@@ -186,6 +184,7 @@ function rip_cd() {
 }
 
 function debug() {
+    echo
     if [ $check_cd_inserted -eq 0 ]; then
     echo "CD inserted: yes"
     else
