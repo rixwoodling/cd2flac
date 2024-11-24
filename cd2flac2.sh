@@ -203,14 +203,8 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "Flac Total:\t\t$FLAC_TOTAL\n"
-
     printf "CD Detected:\t\t$CD_DETECTION\n"
     printf "CD Track Total:\t\t$CD_TRACKTOTAL\n"
-    if [ $csv_match_boolean -eq 0 ]; then
-    echo "CSV vs CD track total? yes"
-    else
-    echo "CSV vs CD track total? no"
-    fi 
 }
 
 # Main function
@@ -226,10 +220,10 @@ main() {
     get_disc_total
     get_disc_number
     get_track_total
+    define_output_directory    
     detect_cd
-    
-    define_output_directory
-    final_checks
+
+    #final_checks
     
     #if [ $flac_count -eq 0 ]; then
     #    echo "directory is empty"
