@@ -211,7 +211,8 @@ function debug() {
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "File Path Exists:\t$OUTPUT_PATH_EXISTS\n"
     printf "Flac Total:\t\t$FLAC_TOTAL\n"
-    
+
+    printf "\n( o )\n"
     printf "CD Detected:\t\t$CD_DETECTION\n"
     printf "CD Track Total:\t\t$CD_TRACKTOTAL\n"
 }
