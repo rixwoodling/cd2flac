@@ -154,7 +154,7 @@ function get_flac_total() {
 }
 
 function detect_multiple_artists() {
-    ARTIST_TOTAL=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $4}' | wc -l)
+    ARTIST_TOTAL=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $4}' | uniq | wc -l)
     if [ $ARTIST_TOTAL -gt 1 ]; then
         ARTIST_TOTAL="Yes"
     else
