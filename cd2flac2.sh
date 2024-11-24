@@ -60,6 +60,7 @@ function choose_album() {
         fi
         MATCH="$(echo "$HITS" | sed -n "${SELECTION}p")"
     fi
+    echo
 }
 
 function get_albumartist() {
