@@ -145,6 +145,7 @@ function verify_output_path() {
         OUTPUT_PATH_EXISTS="Yes"
     else
         OUTPUT_PATH_EXISTS="No"
+    fi
 }
 
 function get_flac_total() {
