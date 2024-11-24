@@ -110,7 +110,7 @@ function get_track_total() {
 # ---
 
 # Function to check CD detection
-function check_cd_inserted() {
+function detect_cd() {
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
     if [ $? -eq 0 ]; then 
         CD_DETECTION="Yes"
@@ -228,6 +228,7 @@ main() {
     get_disc_total
     get_disc_number
     get_track_total
+    detect_cd
     
     define_output_directory
     final_checks
