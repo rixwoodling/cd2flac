@@ -206,7 +206,7 @@ function debug() {
     printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
     printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
     printf "File Path:\t\t$OUTPUT_PATH/\n"
-    printf "Flac Total:\t$flac_count\n"
+    printf "Flac Total:\t\t$flac_count\n"
 }
 
 # Main function
