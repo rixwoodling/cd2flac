@@ -196,16 +196,17 @@ function debug() {
     else
     echo "CSV vs CD track total? no"
     fi 
-    printf "Flac files in Output Path:\t$flac_count\n"
     printf "Album Artist:\t\t$ALBUM_ARTIST\n"
     printf "Album:\t\t\t$ALBUM\n"
     printf "Year:\t\t\t$YEAR\n"
     printf "Attributes:\t\t$ATTRIBUTES\n"
     printf "Disc Total:\t\t$DISC_TOTAL\n"
-    printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
-    printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "Disc Number:\t\t$DISC_NUMBER\n"
     printf "Track Total:\t\t$TRACK_TOTAL\n"
+    printf "Filtered Album Artist:\t$FILTERED_ALBUM_ARTIST\n"
+    printf "Filtered Album Artist:\t$FILTERED_ALBUM\n"
+    printf "File Path:\t\t$OUTPUT_PATH/\n"
+    printf "Flac files in Output Path:\t$flac_count\n"
 }
 
 # Main function
@@ -225,11 +226,11 @@ main() {
     define_output_directory
     final_checks
     
-    if [ $flac_count -eq 0 ]; then
-        echo "directory is empty"
-    else
-        echo "directory is not empty"
-    fi
+    #if [ $flac_count -eq 0 ]; then
+    #    echo "directory is empty"
+    #else
+    #    echo "directory is not empty"
+    #fi
     debug
     #check_cd_inserted
     #if check_cd_inserted; then
