@@ -163,14 +163,14 @@ function detect_multiple_artists() {
 }
 
 function get_tracklist() {
-    if [ $MULTIPLE_ARTISTS == "No" ] && [ !$DISC_TOTAL -gt 1 ]; then
-        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $7"-"$8" "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)
+    if [ $MULTIPLE_ARTISTS == "No" ] && [ ! $DISC_TOTAL -gt 1 ]; then
+        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $8" "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)
     elif [ $MULTIPLE_ARTISTS == "No" ] && [ $DISC_TOTAL -gt 1 ]; then
         TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $7"-"$8" "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)
+    elif [ $MULTIPLE_ARTISTS == "Yes" ] && [ ! $DISC_TOTAL -gt 1 ]; then
+        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $8" "$4" - "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)
     elif [ $MULTIPLE_ARTISTS == "Yes" ] && [ $DISC_TOTAL -gt 1 ]; then
-        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $7"-"$8" "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)
-    elif [ $MULTIPLE_ARTISTS == "Yes" ] && [ $DISC_TOTAL -gt 1 ]; then
-        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $7"-"$8" "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)    
+        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $7"-"$8" "$4" - "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)    
     fi
 }
 
