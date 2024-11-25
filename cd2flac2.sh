@@ -143,23 +143,23 @@ function define_output_directory() {
 function verify_output_path() {
     if [ ! -d "$OUTPUT_PATH" ]; then
         OUTPUT_PATH_EXISTS="No"
+        # if path doesnt exist, no CD, exit
+        # if path doesnt exist + CD detected:
+          # if CD tracks dont match CSV, exit
+          # if CD tracks match,
+            # make path
+            # rip CD
     else
         OUTPUT_PATH_EXISTS="Yes"
+        # if path exists + CD detected:
+          # if FLAC files in path match CD, exit
+          # if FLAC files dont match CD,
+            # rip CD
+        # if path exists, no CD:
+          # if FLAC files dont match CSV, exit
+          # if FLAC files match CSV,
+            # update metadata
     fi
-    # if path doesnt exist, no CD, exit
-    # if path doesnt exist + CD detected:
-      # if CD tracks dont match CSV, exit
-      # if CD tracks match,
-        # make path
-        # rip CD
-    # if path exists + CD detected:
-      # if FLAC files in path match CD, exit
-      # if FLAC files dont match CD,
-        # rip CD
-    # if path exists, no CD:
-      # if FLAC files dont match CSV, exit
-      # if FLAC files match CSV,
-        # update metadata
 }
 
 function get_flac_total() {
