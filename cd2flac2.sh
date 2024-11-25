@@ -141,11 +141,25 @@ function define_output_directory() {
 }
 
 function verify_output_path() {
-    if [ -d "$OUTPUT_PATH" ]; then
-        OUTPUT_PATH_EXISTS="Yes"
-    else
+    if [ ! -d "$OUTPUT_PATH" ]; then
         OUTPUT_PATH_EXISTS="No"
+    else
+        OUTPUT_PATH_EXISTS="Yes"
     fi
+    # if path doesnt exist, no CD, exit
+    # if path doesnt exist + CD detected:
+      # if CD tracks dont match CSV, exit
+      # if CD tracks match,
+        # make path
+        # rip CD
+    # if path exists + CD detected:
+      # if FLAC files in path match CD, exit
+      # if FLAC files dont match CD,
+        # rip CD
+    # if path exists, no CD:
+      # if FLAC files dont match CSV, exit
+      # if FLAC files match CSV,
+        # update metadata
 }
 
 function get_flac_total() {
@@ -205,18 +219,7 @@ function final_checks() {
     else
         csv_match_boolean=1
     fi
-
-
-    # if flac files not in output_path, CD inserted, start ripping
-    #if [ cd_status -eq 0 ]; then
-    # if flac files not in output_path, and CD not inserted, error with nothing to do
-    # if flac files in output_path, and CD not inserted, and flac files match csv, rewrite metadata
-    # if flac files in output_pathy, and CD not inserted, and flac files don't match csv, error with mismatch
-    # if flac files in output_path, and CD inserted, and CD total matches csv, error with files exist
-    # if flac files in output_path, and CD inserted, and CD total doesn't match csv, error with CD/csv mismatch
 }
-
-
 
 # Function to rip CD
 function rip_cd() {
@@ -271,21 +274,6 @@ main() {
     detect_multiple_artists
     get_tracklist
     
-    # if path doesnt exist, no CD, exit
-    # if path doesnt exist + CD detected:
-      # if CD tracks dont match CSV, exit
-      # if CD tracks match,
-        # make path
-        # rip CD
-    # if path exists + CD detected:
-      # if FLAC files in path match CD, exit
-      # if FLAC files dont match CD,
-        # rip CD
-    # if path exists, no CD:
-      # if FLAC files dont match CSV, exit
-      # if FLAC files match CSV,
-        # update metadata
-        
     detect_cd
 
     final_checks
