@@ -154,12 +154,18 @@ function get_flac_total() {
 }
 
 function detect_multiple_artists() {
-    ARTIST_TOTAL=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $4}' | uniq | wc -l)
-    if [ $ARTIST_TOTAL -gt 1 ]; then
-        ARTIST_TOTAL="Yes"
+    MULTIPLE_ARTISTS=$(grep "$ALBUM_ARTIST" csv/music.csv | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $4}' | uniq | wc -l)
+    if [ $MULTIPLE_ARTISTS -gt 1 ]; then
+        MULTIPLE_ARTISTS="Yes"
     else
-        ARTIST_TOTAL="No"
+        MULTIPLE_ARTISTS="No"
     fi      
+}
+
+function get_tracklist() (
+    if [ $MULTIPLE_ARTISTS == "Yes" ]; then
+        TRACKLIST=$(grep "$ALBUM_ARTIST" csv/music.csv | grep Doves | grep "$ALBUM" | grep "$YEAR" | grep "$ATTRIBUTES" | sed 's/, /__/' | awk -F',' '{print $7"-"$8" "$9}' | sed 's/__/, /' | grep ^$DISC_NUMBER)
+    fi
 }
 
 function final_checks() {
@@ -220,7 +226,8 @@ function debug() {
     printf "File Path:\t\t$OUTPUT_PATH/\n"
     printf "File Path Exists:\t$OUTPUT_PATH_EXISTS\n"
     printf "Flac Total:\t\t$FLAC_TOTAL\n"
-    printf "Multiple Artists:\t$ARTIST_TOTAL\n"
+    printf "Multiple Artists:\t$MULTIPLE_ARTISTS\n"
+    printf "Tracklist:\n$TRACKLIST\n"
 
     printf "\n( o )\n"
     printf "CD Detected:\t\t$CD_DETECTION\n"
@@ -246,6 +253,7 @@ main() {
     get_flac_total
 
     detect_multiple_artists
+    get_tracklist
     
     detect_cd
 
