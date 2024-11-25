@@ -282,9 +282,9 @@ main() {
       # if FLAC files dont match CD,
         # rip CD
     # if path exists, no CD:
-        # if FLAC files dont match CSV, exit
-        # if FLAC files match CSV,
-          # update metadata
+      # if FLAC files dont match CSV, exit
+      # if FLAC files match CSV,
+        # update metadata
         
     detect_cd
 
