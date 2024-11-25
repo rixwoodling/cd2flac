@@ -178,6 +178,12 @@ function get_tracklist() {
     fi
 }
 
+function make_path() {
+    if [ ! -d "$OUTPUT_PATH" ]; then
+        mkdir -p "$OUTPUT_PATH"
+    fi
+}
+
 function final_checks() {
     # check if cd inserted, return value 0 or 1
     udevadm info --query=all --name=/dev/sr0 2>/dev/null | grep -q 'ID_CDROM_MEDIA=1' &>/dev/null
