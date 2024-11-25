@@ -271,6 +271,21 @@ main() {
     detect_multiple_artists
     get_tracklist
     
+    # if path doesnt exist, no CD, exit
+    # if path doesnt exist + CD detected:
+      # if CD tracks dont match CSV, exit
+      # if CD tracks match,
+        # make path
+        # rip CD
+    # if path exists + CD detected:
+      # if FLAC files in path match CD, exit
+      # if FLAC files dont match CD,
+        # rip CD
+    # if path exists, no CD:
+        # if FLAC files dont match CSV, exit
+        # if FLAC files match CSV,
+          # update metadata
+        
     detect_cd
 
     final_checks
