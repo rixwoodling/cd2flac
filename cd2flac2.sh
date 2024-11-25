@@ -21,8 +21,8 @@ function check_prerequisites() {
         echo "sudo apt install flac"
         exit 1
     fi
-    if [ ! -f "csv/*.csv" ]; then
-        echo "csv/*.csv file not found! :("
+    if [ ! -f "csv/music.csv" ]; then
+        echo "csv/music.csv file not found! :("
         exit 1
     fi
 }
